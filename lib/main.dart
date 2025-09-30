@@ -9,29 +9,45 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var lister = ListNotifier();
+    List<String> list = ["item 1", "item 2", "item 3"];
+    final fieldText = TextEditingController();
+    final listenable = Lister();
     return MaterialApp(
       home: Scaffold(
         body: Column(
           children: [
-            Expanded(
-              child: ListenableBuilder(
-                listenable: lister,
-                builder: (context, child) {
-                  return ListView(
-                    children: lister.numbers
-                        .map((item) => Text("$item"))
-                        .toList(),
-                  );
-                },
+            Container(
+              padding: EdgeInsets.only(top: 100),
+              child: TextField(
+                controller: fieldText,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Input",
+                ),
               ),
             ),
-            Text("${lister.numbers}"),
-            TextButton(
-              onPressed: () {
-                lister.addToList();
+            ListenableBuilder(
+              listenable: listenable,
+              builder: (context, child) {
+                return Container(
+                  height: 500.0,
+                  color: Colors.green,
+                  child: ListView(
+                    children: listenable.list
+                        .map((item) => Text(item))
+                        .toList(),
+                  ),
+                );
               },
-              child: Text("Add"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (fieldText.text.isNotEmpty) {
+                  listenable.addToList(fieldText.text);
+                  fieldText.clear();
+                }
+              },
+              child: Text("Add Item"),
             ),
           ],
         ),
@@ -40,14 +56,13 @@ class App extends StatelessWidget {
   }
 }
 
-class ListNotifier extends ChangeNotifier {
-  int _number = 0;
-  final List<int> _numbers = [];
-  List<int> get numbers => _numbers;
+class Lister extends ChangeNotifier {
+  List<String> _list = [];
+  List<String> get list => _list;
 
-  void addToList() {
-    _numbers.add(_number++);
-    print(numbers);
+  void addToList(String text) {
+    print(text);
+    _list.add(text);
     notifyListeners();
   }
 }
