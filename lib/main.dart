@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'db.dart';
 
 void main() {
   runApp(const App());
+  db();
 }
 
 class App extends StatelessWidget {
@@ -9,7 +11,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> list = ["item 1", "item 2", "item 3"];
     final fieldText = TextEditingController();
     final listenable = Lister();
     return MaterialApp(
@@ -17,7 +18,7 @@ class App extends StatelessWidget {
         body: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(top: 100),
+              padding: EdgeInsets.all(100),
               child: TextField(
                 controller: fieldText,
                 decoration: InputDecoration(
