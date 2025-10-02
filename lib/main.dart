@@ -47,7 +47,6 @@ class App extends StatelessWidget {
                 if (fieldText.text.isNotEmpty) {
                   // listenable.addToList(fieldText.text);
                   Listing listing = Listing(
-                    id: 1,
                     name: fieldText.text,
                     price: 10.10,
                     status: "",
