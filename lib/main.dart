@@ -3,7 +3,6 @@ import 'db.dart';
 
 void main() {
   runApp(const App());
-  db();
 }
 
 class App extends StatelessWidget {
@@ -42,11 +41,13 @@ class App extends StatelessWidget {
               },
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 if (fieldText.text.isNotEmpty) {
                   listenable.addToList(fieldText.text);
                   fieldText.clear();
                 }
+                var dogs = await getDogs();
+                print(dogs.map((dog) => dog['name']));
               },
               child: Text("Add Item"),
             ),
