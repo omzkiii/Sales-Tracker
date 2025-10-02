@@ -1,7 +1,7 @@
 class Listing {
   final int id;
   final String name;
-  final int price;
+  final double price;
   final String status;
   final String desc;
 
@@ -13,13 +13,13 @@ class Listing {
     required this.desc,
   });
 
-  Listing toObject(Map<String, dynamic> map) {
+  static Listing toObject(Map<String, Object?> map) {
     return Listing(
-      id: map['id'],
-      name: map['name'],
-      price: map['price'],
-      status: map['status'],
-      desc: map['desc'],
+      id: map['id'] as int,
+      name: map['name'] as String,
+      price: map['price'] as double,
+      status: map['status'] as String,
+      desc: map['desc'] as String,
     );
   }
 
