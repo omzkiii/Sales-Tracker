@@ -1,12 +1,12 @@
 class Listing {
-  final int id;
+  final int? id;
   final String name;
   final double price;
   final String status;
   final String desc;
 
   Listing({
-    required this.id,
+    this.id,
     required this.name,
     required this.price,
     required this.status,
@@ -25,7 +25,7 @@ class Listing {
 
   Map<String, Object?> toMap() {
     return {
-      'id': null,
+      'id': id,
       'name': name,
       'price': price,
       'status': status,
