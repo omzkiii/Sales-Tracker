@@ -25,9 +25,9 @@ class Listing {
 
   Map<String, Object?> toMap() {
     return {
-      'id': id,
+      'id': null,
       'name': name,
-      'age': price,
+      'price': price,
       'status': status,
       'desc': desc,
     };

@@ -1,3 +1,5 @@
+import 'package:app/controllers/listing.dart';
+import 'package:app/models/listing.dart';
 import 'package:flutter/material.dart';
 import 'db.dart';
 
@@ -34,7 +36,7 @@ class App extends StatelessWidget {
                   color: Colors.green,
                   child: ListView(
                     children: listenable.list
-                        .map((item) => Text(item))
+                        .map((item) => Text(item.name))
                         .toList(),
                   ),
                 );
@@ -43,7 +45,16 @@ class App extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 if (fieldText.text.isNotEmpty) {
-                  listenable.addToList(fieldText.text);
+                  // listenable.addToList(fieldText.text);
+                  Listing listing = Listing(
+                    id: 1,
+                    name: fieldText.text,
+                    price: 10.10,
+                    status: "",
+                    desc: "listed item",
+                  );
+                  listenable.addToList(listing);
+                  print("Added to listing");
                   fieldText.clear();
                 }
               },
@@ -57,12 +68,16 @@ class App extends StatelessWidget {
 }
 
 class Lister extends ChangeNotifier {
-  List<String> _list = [];
-  List<String> get list => _list;
-
-  void addToList(String text) {
-    print(text);
-    _list.add(text);
+  List<Listing> _list = [];
+  List<Listing> get list => _list;
+  void addToList(Listing listing) async {
+    print(listing);
+    insertListing(listing);
+    await loadList();
     notifyListeners();
+  }
+
+  Future<void> loadList() async {
+    _list = await listings();
   }
 }

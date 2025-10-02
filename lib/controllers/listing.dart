@@ -5,7 +5,7 @@ import 'package:sqflite/sqflite.dart';
 void insertListing(Listing listing) async {
   Database db = await DB.init();
   db.insert(
-    "listing",
+    "listings",
     listing.toMap(),
     conflictAlgorithm: ConflictAlgorithm.replace,
   );
