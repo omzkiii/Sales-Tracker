@@ -46,8 +46,6 @@ class App extends StatelessWidget {
                   listenable.addToList(fieldText.text);
                   fieldText.clear();
                 }
-                var dogs = await getDogs();
-                print(dogs.map((dog) => dog['name']));
               },
               child: Text("Add Item"),
             ),

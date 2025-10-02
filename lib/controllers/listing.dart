@@ -10,3 +10,5 @@ void insertListing(Listing listing) async {
     conflictAlgorithm: ConflictAlgorithm.replace,
   );
 }
+
+// Future<List<Listing>> listings() async {}

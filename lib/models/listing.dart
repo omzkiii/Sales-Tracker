@@ -13,6 +13,16 @@ class Listing {
     required this.desc,
   });
 
+  Listing toObject(Map<String, dynamic> map) {
+    return Listing(
+      id: map['id'],
+      name: map['name'],
+      price: map['price'],
+      status: map['status'],
+      desc: map['desc'],
+    );
+  }
+
   Map<String, Object?> toMap() {
     return {
       'id': id,
