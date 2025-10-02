@@ -11,4 +11,9 @@ void insertListing(Listing listing) async {
   );
 }
 
-// Future<List<Listing>> listings() async {}
+Future<List<Listing>> listings() async {
+  Database db = await DB.init();
+  List<Map<String, Object?>> map = await db.query("listings");
+  List<Listing> listings = map.map((item) => Listing.toObject(item)).toList();
+  return listings;
+}
