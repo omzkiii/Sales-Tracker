@@ -7,7 +7,6 @@ import 'package:sqflite/sqflite.dart';
 class DB {
   static late Future<Database> database;
   static Future<Database> init() async {
-    WidgetsFlutterBinding.ensureInitialized();
     database = openDatabase(
       join(await getDatabasesPath(), 'sqlite.db'),
       onCreate: (db, version) {
