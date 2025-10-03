@@ -14,21 +14,23 @@ class Listings extends StatelessWidget {
           listenable: listenable,
           builder: (context, child) {
             listenable.loadList();
-            return Container(
+            return SizedBox(
               height: 500.0,
-              color: Colors.green,
               child: ListView(
                 children: listenable.list
-                    .map((item) => Text(item.name))
+                    .map((elem) => Text(elem.name))
                     .toList(),
               ),
             );
           },
         ),
-
         ElevatedButton(
-          onPressed: () {
-            Listing listing = Listing(name: "foo", price: 10, desc: "for sale");
+          onPressed: () async {
+            Listing listing = Listing(
+              name: "foo",
+              price: 99.0,
+              desc: "listed item",
+            );
             listenable.addToList(listing);
           },
           child: Text("Add to list"),
