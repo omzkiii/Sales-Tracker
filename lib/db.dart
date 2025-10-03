@@ -12,7 +12,7 @@ class DB {
       join(await getDatabasesPath(), 'sqlite.db'),
       onCreate: (db, version) {
         return db.execute(
-          'CREATE TABLE listings(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, price REAL NOT NULL, status TEXT DEFAULT "listed", desc TEXT)',
+          "CREATE TABLE listings(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, price REAL NOT NULL, status TEXT DEFAULT 'listed', desc TEXT)",
         );
       },
       version: 1,

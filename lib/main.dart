@@ -49,7 +49,6 @@ class App extends StatelessWidget {
                   Listing listing = Listing(
                     name: fieldText.text,
                     price: 10.10,
-                    status: "",
                     desc: "listed item",
                   );
                   listenable.addToList(listing);
