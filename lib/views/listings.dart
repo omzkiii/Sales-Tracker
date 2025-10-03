@@ -7,7 +7,7 @@ class Listings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var listenable = ListNotifier();
+    var listenable = ListingNotifier();
     return Scaffold(
       body: Column(
         children: [
@@ -27,46 +27,11 @@ class Listings extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          Listing listing = Listing(
-            name: "foo",
-            price: 99.0,
-            desc: "listed item",
-          );
-          listenable.addToList(listing);
-        },
-        child: Icon(Icons.add),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        elevation: 0.0,
-        child: Row(
-          children: [
-            IconButton(
-              tooltip: 'Open navigation menu',
-              icon: const Icon(Icons.menu),
-              onPressed: () {},
-            ),
-            Spacer(),
-            IconButton(
-              tooltip: 'Search',
-              icon: const Icon(Icons.search),
-              onPressed: () {},
-            ),
-            IconButton(
-              tooltip: 'Favorite',
-              icon: const Icon(Icons.favorite),
-              onPressed: () {},
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
 
-class ListNotifier extends ChangeNotifier {
+class ListingNotifier extends ChangeNotifier {
   List<Listing> _list = [];
   List<Listing> get list => _list;
 
