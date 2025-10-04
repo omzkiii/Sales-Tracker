@@ -1,5 +1,6 @@
 import 'package:app/controllers/listing.dart';
 import 'package:app/models/listing.dart';
+import 'package:app/views/item.dart';
 import 'package:flutter/material.dart';
 
 class Listings extends StatelessWidget {
@@ -37,13 +38,16 @@ class ListingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hero(
-      tag: "Listing",
+      tag: "${listing.id}",
       child: ListTile(
         title: Text(listing.name),
         subtitle: Text(listing.price.toString()),
         tileColor: Colors.red,
         onTap: () {
-          print("item: ${listing.name}");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Item(listing: listing)),
+          );
         },
       ),
     );
