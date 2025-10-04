@@ -17,9 +17,11 @@ class _FormListingState extends State<FormListing> {
   String _formTitle = "Update Listing";
 
   Function _listOperation = updateListing;
+  IconData _floatingIcon = Icons.edit;
 
   @override
   Widget build(BuildContext context) {
+    print(widget.listing);
     final nameController = TextEditingController(text: widget.listing?.name);
 
     final descController = TextEditingController(text: widget.listing?.desc);
@@ -31,6 +33,7 @@ class _FormListingState extends State<FormListing> {
     if (widget.isNew) {
       _formTitle = "New Listing";
       _listOperation = insertListing;
+      _floatingIcon = Icons.add;
     }
     return Scaffold(
       appBar: AppBar(title: Text(_formTitle)),
@@ -48,7 +51,7 @@ class _FormListingState extends State<FormListing> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(_floatingIcon),
         onPressed: () {
           if (_formKey.currentState!.validate()) {
             Listing listing = Listing(

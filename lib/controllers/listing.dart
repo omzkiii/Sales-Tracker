@@ -37,6 +37,11 @@ Future<void> deleteListing(int id) async {
 
 Future<void> updateListing(Listing listing) async {
   Database db = await DB.init();
-  print(listing);
-  await db.update("listings", listing.toMap());
+  print("UPDATING: $listing");
+  await db.update(
+    "listings",
+    listing.toMap(),
+    where: "id = ?",
+    whereArgs: [listing.id],
+  );
 }

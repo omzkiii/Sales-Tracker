@@ -56,5 +56,6 @@ class ItemNotifier extends ChangeNotifier {
   Future<void> refreshItem(int id) async {
     item = await getListing(id);
     notifyListeners();
+    print("Item refreshed");
   }
 }
