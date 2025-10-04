@@ -1,3 +1,4 @@
+import 'package:app/models/listing.dart';
 import 'package:flutter/material.dart';
 
 class AddListing extends StatefulWidget {
@@ -9,6 +10,9 @@ class AddListing extends StatefulWidget {
 
 class _AddListingState extends State<AddListing> {
   final _formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final descController = TextEditingController();
+  final priceController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,8 +21,12 @@ class _AddListingState extends State<AddListing> {
         key: _formKey,
         child: Column(
           children: [
-            InputField(inputName: "Name"),
-            InputField(inputName: "Description"),
+            InputField<String>(inputName: "Name", controller: nameController),
+            InputField<String>(
+              inputName: "Description",
+              controller: descController,
+            ),
+            InputField<double>(inputName: "Price", controller: priceController),
           ],
         ),
       ),
@@ -26,7 +34,11 @@ class _AddListingState extends State<AddListing> {
         child: Icon(Icons.add),
         onPressed: () {
           if (_formKey.currentState!.validate()) {
-            // Navigator.pop(context);
+            _formKey.currentState!.save();
+            print("Name: ${nameController.text}");
+            print("Desc: ${descController.text}");
+            print("Price: ${priceController.text}");
+            Navigator.pop(context);
           }
         },
       ),
@@ -34,9 +46,14 @@ class _AddListingState extends State<AddListing> {
   }
 }
 
-class InputField extends StatelessWidget {
+class InputField<T> extends StatelessWidget {
   final String inputName;
-  const InputField({super.key, required this.inputName});
+  final TextEditingController controller;
+  const InputField({
+    super.key,
+    required this.inputName,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +64,14 @@ class InputField extends StatelessWidget {
           child: Column(
             children: [
               TextFormField(
+                controller: controller,
                 decoration: InputDecoration(labelText: inputName),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please input ${inputName.toLowerCase()}.';
+                  }
+                  if (T == double && num.tryParse(value) == null) {
+                    return 'Please input a valid price.';
                   }
                   return null;
                 },
