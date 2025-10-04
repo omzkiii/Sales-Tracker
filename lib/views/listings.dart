@@ -15,8 +15,7 @@ class Listings extends StatelessWidget {
             listenable: listenable,
             builder: (context, child) {
               listenable.loadList();
-              return SizedBox(
-                height: 500.0,
+              return Expanded(
                 child: ListView(
                   children: listenable.list
                       .map((elem) => ListingCard(listing: elem))
@@ -37,7 +36,17 @@ class ListingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child: Text(listing.name));
+    return Hero(
+      tag: "Listing",
+      child: ListTile(
+        title: Text(listing.name),
+        subtitle: Text(listing.price.toString()),
+        tileColor: Colors.red,
+        onTap: () {
+          print("item: ${listing.name}");
+        },
+      ),
+    );
   }
 }
 
