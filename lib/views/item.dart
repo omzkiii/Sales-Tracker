@@ -1,5 +1,6 @@
 import 'package:app/controllers/listing.dart';
 import 'package:app/models/listing.dart';
+import 'package:app/views/form_listing.dart';
 import 'package:flutter/material.dart';
 
 class Item extends StatelessWidget {
@@ -14,6 +15,18 @@ class Item extends StatelessWidget {
         children: [
           Text("Price: ${listing.price}"),
           Text("Description: ${listing.desc}"),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      FormListing(isNew: false, listing: listing),
+                ),
+              );
+            },
+            child: Text("Edit Listing"),
+          ),
           ElevatedButton(
             onPressed: () {
               deleteListing(listing.id!);

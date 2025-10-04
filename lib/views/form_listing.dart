@@ -27,6 +27,7 @@ class _FormListingState extends State<FormListing> {
     final priceController = TextEditingController(
       text: widget.listing?.price.toString(),
     );
+
     if (widget.isNew) {
       _formTitle = "New Listing";
       _listOperation = insertListing;
@@ -50,8 +51,8 @@ class _FormListingState extends State<FormListing> {
         child: Icon(Icons.add),
         onPressed: () {
           if (_formKey.currentState!.validate()) {
-            _formKey.currentState!.save();
             Listing listing = Listing(
+              id: widget.listing?.id,
               name: nameController.text,
               price: num.parse(priceController.text).toDouble(),
               desc: descController.text,
