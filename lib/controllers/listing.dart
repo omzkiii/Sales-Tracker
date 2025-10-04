@@ -22,3 +22,12 @@ Future<void> deleteListing(int id) async {
   Database db = await DB.init();
   await db.delete("listings", where: "id = ?", whereArgs: [id]);
 }
+
+Future<void> updateListing(Listing listing) async {
+  Database db = await DB.init();
+  await db.insert(
+    "listings",
+    listing.toMap(),
+    conflictAlgorithm: ConflictAlgorithm.replace,
+  );
+}
