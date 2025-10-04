@@ -2,22 +2,37 @@ import 'package:app/controllers/listing.dart';
 import 'package:app/models/listing.dart';
 import 'package:flutter/material.dart';
 
-class AddListing extends StatefulWidget {
-  const AddListing({super.key});
+class FormListing extends StatefulWidget {
+  final bool isNew;
+  final Listing? listing;
+  const FormListing({super.key, required this.isNew, this.listing});
 
   @override
-  State<AddListing> createState() => _AddListingState();
+  State<FormListing> createState() => _FormListingState();
 }
 
-class _AddListingState extends State<AddListing> {
+class _FormListingState extends State<FormListing> {
   final _formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final descController = TextEditingController();
-  final priceController = TextEditingController();
+
+  String _formTitle = "Update Listing";
+
+  Function _listOperation = updateListing;
+
   @override
   Widget build(BuildContext context) {
+    final nameController = TextEditingController(text: widget.listing?.name);
+
+    final descController = TextEditingController(text: widget.listing?.desc);
+
+    final priceController = TextEditingController(
+      text: widget.listing?.price.toString(),
+    );
+    if (widget.isNew) {
+      _formTitle = "New Listing";
+      _listOperation = insertListing;
+    }
     return Scaffold(
-      appBar: AppBar(title: Text("Add Listing")),
+      appBar: AppBar(title: Text(_formTitle)),
       body: Form(
         key: _formKey,
         child: Column(
@@ -36,15 +51,12 @@ class _AddListingState extends State<AddListing> {
         onPressed: () {
           if (_formKey.currentState!.validate()) {
             _formKey.currentState!.save();
-            print("Name: ${nameController.text}");
-            print("Desc: ${descController.text}");
-            print("Price: ${priceController.text}");
             Listing listing = Listing(
               name: nameController.text,
               price: num.parse(priceController.text).toDouble(),
               desc: descController.text,
             );
-            insertListing(listing);
+            _listOperation(listing);
             Navigator.pop(context);
           }
         },
