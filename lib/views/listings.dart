@@ -46,7 +46,7 @@ class ListingCard extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Item(listing: listing)),
+            MaterialPageRoute(builder: (context) => Item(item: listing)),
           );
         },
       ),
@@ -57,11 +57,6 @@ class ListingCard extends StatelessWidget {
 class ListingNotifier extends ChangeNotifier {
   List<Listing> _list = [];
   List<Listing> get list => _list;
-
-  void addToList(Listing listing) async {
-    insertListing(listing);
-    await loadList();
-  }
 
   Future<void> loadList() async {
     _list = await listings();

@@ -18,6 +18,18 @@ Future<List<Listing>> listings() async {
   return listings;
 }
 
+Future<Listing> getListing(int id) async {
+  Database db = await DB.init();
+  List<Map<String, Object?>> map = await db.query(
+    "listings",
+    where: "id = ?",
+    whereArgs: [id],
+    limit: 1,
+  );
+  List<Listing> listings = map.map((item) => Listing.toObject(item)).toList();
+  return listings[0];
+}
+
 Future<void> deleteListing(int id) async {
   Database db = await DB.init();
   await db.delete("listings", where: "id = ?", whereArgs: [id]);

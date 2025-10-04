@@ -58,7 +58,7 @@ class _FormListingState extends State<FormListing> {
               desc: descController.text,
             );
             _listOperation(listing);
-            Navigator.pop(context);
+            Navigator.pop(context, true);
           }
         },
       ),
