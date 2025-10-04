@@ -1,5 +1,5 @@
 import 'package:app/models/listing.dart';
-import 'package:app/views/add_listing.dart';
+import 'package:app/views/form_listing.dart';
 import 'package:app/views/listings.dart';
 import 'package:flutter/material.dart';
 
@@ -13,17 +13,14 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var listenable = ListingNotifier();
-
     return Scaffold(
       body: Listings(),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddListing()),
+            MaterialPageRoute(builder: (context) => FormListing(isNew: true)),
           );
         },
         child: Icon(Icons.add),
