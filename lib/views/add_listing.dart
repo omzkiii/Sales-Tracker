@@ -1,3 +1,4 @@
+import 'package:app/controllers/listing.dart';
 import 'package:app/models/listing.dart';
 import 'package:flutter/material.dart';
 
@@ -38,6 +39,12 @@ class _AddListingState extends State<AddListing> {
             print("Name: ${nameController.text}");
             print("Desc: ${descController.text}");
             print("Price: ${priceController.text}");
+            Listing listing = Listing(
+              name: nameController.text,
+              price: num.parse(priceController.text).toDouble(),
+              desc: descController.text,
+            );
+            insertListing(listing);
             Navigator.pop(context);
           }
         },
