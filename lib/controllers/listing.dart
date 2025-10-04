@@ -17,3 +17,8 @@ Future<List<Listing>> listings() async {
   List<Listing> listings = map.map((item) => Listing.toObject(item)).toList();
   return listings;
 }
+
+Future<void> deleteListing(int id) async {
+  Database db = await DB.init();
+  await db.delete("listings", where: "id = ?", whereArgs: [id]);
+}
