@@ -14,6 +14,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var listenable = ListingNotifier();
+
     return Scaffold(
       body: Listings(),
 

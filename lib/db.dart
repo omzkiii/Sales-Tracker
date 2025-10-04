@@ -14,7 +14,14 @@ class DB {
           "CREATE TABLE listings(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, price REAL NOT NULL, status TEXT DEFAULT 'listed', desc TEXT)",
         );
       },
-      version: 1,
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute(
+            "CREATE TABLE listings(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, price REAL NOT NULL, status TEXT DEFAULT 'listed', desc TEXT)",
+          );
+        }
+      },
+      version: 2,
     );
     return database;
   }
