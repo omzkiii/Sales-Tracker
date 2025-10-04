@@ -19,7 +19,7 @@ class Listings extends StatelessWidget {
                 height: 500.0,
                 child: ListView(
                   children: listenable.list
-                      .map((elem) => Text(elem.name))
+                      .map((elem) => ListingCard(listing: elem))
                       .toList(),
                 ),
               );
@@ -28,6 +28,16 @@ class Listings extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class ListingCard extends StatelessWidget {
+  final Listing listing;
+  const ListingCard({super.key, required this.listing});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(child: Text(listing.name));
   }
 }
 
