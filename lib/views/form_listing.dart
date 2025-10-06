@@ -19,21 +19,36 @@ class _FormListingState extends State<FormListing> {
   Function _listOperation = updateListing;
   IconData _floatingIcon = Icons.edit;
 
+  late TextEditingController nameController;
+  late TextEditingController descController;
+  late TextEditingController priceController;
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController(text: widget.listing?.name);
+    descController = TextEditingController(text: widget.listing?.desc);
+    priceController = TextEditingController(
+      text: widget.listing?.price.toString(),
+    );
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    descController.dispose();
+    priceController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     print(widget.listing);
-    final nameController = TextEditingController(text: widget.listing?.name);
-
-    final descController = TextEditingController(text: widget.listing?.desc);
-
-    final priceController = TextEditingController(
-      text: widget.listing?.price.toString(),
-    );
 
     if (widget.isNew) {
       _formTitle = "New Listing";
       _listOperation = insertListing;
-      _floatingIcon = Icons.add;
+      _floatingIcon = Icons.save;
     }
     return Scaffold(
       appBar: AppBar(title: Text(_formTitle)),
