@@ -3,7 +3,7 @@ import 'package:app/models/listing.dart';
 import 'package:sqflite/sqflite.dart';
 
 Future<void> insertListing(Listing listing) async {
-  Database db = await DB.init();
+  Database db = await DB.initDB();
   await db.insert(
     "listings",
     listing.toMap(),
@@ -12,14 +12,14 @@ Future<void> insertListing(Listing listing) async {
 }
 
 Future<List<Listing>> listings() async {
-  Database db = await DB.init();
+  Database db = await DB.initDB();
   List<Map<String, Object?>> map = await db.query("listings");
   List<Listing> listings = map.map((item) => Listing.toObject(item)).toList();
   return listings;
 }
 
 Future<Listing> getListing(int id) async {
-  Database db = await DB.init();
+  Database db = await DB.initDB();
   List<Map<String, Object?>> map = await db.query(
     "listings",
     where: "id = ?",
@@ -31,12 +31,12 @@ Future<Listing> getListing(int id) async {
 }
 
 Future<void> deleteListing(int id) async {
-  Database db = await DB.init();
+  Database db = await DB.initDB();
   await db.delete("listings", where: "id = ?", whereArgs: [id]);
 }
 
 Future<void> updateListing(Listing listing) async {
-  Database db = await DB.init();
+  Database db = await DB.initDB();
   print("UPDATING: $listing");
   await db.update(
     "listings",
