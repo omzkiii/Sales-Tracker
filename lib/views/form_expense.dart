@@ -14,6 +14,8 @@ class _FormExpenseState extends State<FormExpense> {
   late var descContoller = TextEditingController();
 
   String _formTitle = "Update Expense";
+  // Function _expenseOperation = updateListing;
+  IconData _floatingIcon = Icons.edit;
 
   @override
   void initState() {
@@ -30,14 +32,23 @@ class _FormExpenseState extends State<FormExpense> {
       body: Form(
         child: Column(
           children: [
-            InputField<String>(inputName: "name", controller: nameController),
+            InputField<String>(inputName: "Name", controller: nameController),
             InputField<double>(
-              inputName: "amount",
+              inputName: "Amount",
               controller: amountController,
             ),
-            InputField<String>(inputName: "name", controller: descContoller),
+            InputField<String>(
+              inputName: "Description",
+              controller: descContoller,
+            ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(_floatingIcon),
+        onPressed: () {
+          Navigator.pop(context, true);
+        },
       ),
     );
   }
