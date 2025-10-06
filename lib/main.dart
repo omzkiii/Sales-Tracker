@@ -1,4 +1,4 @@
-import 'package:app/models/listing.dart';
+import 'package:app/db.dart';
 import 'package:app/views/form_listing.dart';
 import 'package:app/views/listings.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +8,14 @@ void main() {
   runApp(const MaterialApp(home: App()));
 }
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({super.key});
 
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
