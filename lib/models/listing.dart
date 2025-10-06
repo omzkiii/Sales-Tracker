@@ -35,6 +35,6 @@ class Listing {
 
   @override
   String toString() {
-    return 'Listing{id: $id, name: $name, age: $price, status: $status, desc: $desc}';
+    return 'Listing{id: $id, name: $name, price: $price, status: $status, desc: $desc}';
   }
 }
