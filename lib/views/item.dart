@@ -1,5 +1,6 @@
 import 'package:app/controllers/listing.dart';
 import 'package:app/models/listing.dart';
+import 'package:app/views/form_expense.dart';
 import 'package:app/views/form_listing.dart';
 import 'package:flutter/material.dart';
 
@@ -41,6 +42,15 @@ class Item extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 child: Text("Delete Listing"),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  var result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FormExpense()),
+                  );
+                },
+                child: Text("Add Expense"),
               ),
             ],
           ),

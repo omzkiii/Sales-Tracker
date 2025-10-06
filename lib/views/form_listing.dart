@@ -16,7 +16,6 @@ class _FormListingState extends State<FormListing> {
   final _formKey = GlobalKey<FormState>();
 
   String _formTitle = "Update Listing";
-
   Function _listOperation = updateListing;
   IconData _floatingIcon = Icons.edit;
 
