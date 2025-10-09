@@ -3,24 +3,30 @@ import 'package:app/models/expenses.dart';
 import 'package:flutter/material.dart';
 
 class Expenses extends StatelessWidget {
-  const Expenses({super.key});
+  final int listingId;
+  const Expenses({super.key, required this.listingId});
 
   @override
   Widget build(BuildContext context) {
-    var listenable = ExpensesNotifier();
+    var listenable = ExpenseNotifier();
     return ListenableBuilder(
       listenable: listenable,
       builder: (context, child) {
-        return Column(children: []);
+        listenable.getExpenses(listingId: listingId);
+        return Expanded(
+          child: ListView(
+            children: listenable.list.map((item) => Text(item.name)).toList(),
+          ),
+        );
       },
     );
   }
 }
 
-class ExpensesNotifier extends ChangeNotifier {
+class ExpenseNotifier extends ChangeNotifier {
   List<Expense> list = [];
 
-  Future<void> getExpenses() async {
-    list = await expenses();
+  Future<void> getExpenses({required int listingId}) async {
+    list = await expenses(listingId: listingId);
   }
 }
