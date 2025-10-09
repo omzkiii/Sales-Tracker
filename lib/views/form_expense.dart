@@ -1,14 +1,18 @@
+import 'package:app/controllers/expense.dart';
+import 'package:app/models/expenses.dart';
 import 'package:app/views/input_field.dart';
 import 'package:flutter/material.dart';
 
 class FormExpense extends StatefulWidget {
-  const FormExpense({super.key});
+  final int listingId;
+  const FormExpense({super.key, required this.listingId});
 
   @override
   State<FormExpense> createState() => _FormExpenseState();
 }
 
 class _FormExpenseState extends State<FormExpense> {
+  final _formKey = GlobalKey<FormState>();
   late var nameController = TextEditingController();
   late var amountController = TextEditingController();
   late var descContoller = TextEditingController();
@@ -30,6 +34,7 @@ class _FormExpenseState extends State<FormExpense> {
     return Scaffold(
       appBar: AppBar(title: Text(_formTitle)),
       body: Form(
+        key: _formKey,
         child: Column(
           children: [
             InputField<String>(inputName: "Name", controller: nameController),
@@ -46,7 +51,14 @@ class _FormExpenseState extends State<FormExpense> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(_floatingIcon),
-        onPressed: () {
+        onPressed: () async {
+          Expense expense = Expense(
+            listingId: widget.listingId,
+            name: nameController.text,
+            amount: num.parse(amountController.text).toDouble(),
+            desc: descContoller.text,
+          );
+          await insertExpense(expense);
           Navigator.pop(context, true);
         },
       ),
