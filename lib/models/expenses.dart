@@ -16,7 +16,7 @@ class Expense {
   static Expense toObject(Map<String, Object?> map) {
     return Expense(
       id: map['id'] as int,
-      listingId: map['listingId'] as int,
+      listingId: map['listing_id'] as int,
       name: map['name'] as String,
       amount: map['amount'] as double,
       desc: map['desc'] as String,
