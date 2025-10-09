@@ -30,6 +30,14 @@ class _FormExpenseState extends State<FormExpense> {
   }
 
   @override
+  void dispose() {
+    nameController.dispose();
+    amountController.dispose();
+    descContoller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(_formTitle)),
@@ -51,15 +59,17 @@ class _FormExpenseState extends State<FormExpense> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(_floatingIcon),
-        onPressed: () async {
-          Expense expense = Expense(
-            listingId: widget.listingId,
-            name: nameController.text,
-            amount: num.parse(amountController.text).toDouble(),
-            desc: descContoller.text,
-          );
-          await insertExpense(expense);
-          Navigator.pop(context, true);
+        onPressed: () {
+          if (_formKey.currentState!.validate()) {
+            Expense expense = Expense(
+              listingId: widget.listingId,
+              name: nameController.text,
+              amount: num.parse(amountController.text).toDouble(),
+              desc: descContoller.text,
+            );
+            insertExpense(expense);
+            Navigator.pop(context, true);
+          }
         },
       ),
     );
