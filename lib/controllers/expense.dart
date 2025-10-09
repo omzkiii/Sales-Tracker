@@ -11,9 +11,13 @@ Future<void> insertExpense(Expense expense) async {
   );
 }
 
-Future<List<Expense>> expenses() async {
+Future<List<Expense>> expenses({required int listingId}) async {
   Database db = await DB.initDB();
-  List<Map<String, Object?>> map = await db.query("expenses");
+  List<Map<String, Object?>> map = await db.query(
+    "expenses",
+    where: "listing_id = ?",
+    whereArgs: [listingId],
+  );
   List<Expense> expenses = map.map((item) => Expense.toObject(item)).toList();
   return expenses;
 }
