@@ -26,7 +26,7 @@ class Expense {
   Map<String, Object?> toMap() {
     return {
       'id': id,
-      'listingId': listingId,
+      'listing_id': listingId,
       'name': name,
       'amount': amount,
       'desc': desc,
