@@ -33,10 +33,9 @@ class ExpenseCard extends StatelessWidget {
   const ExpenseCard({super.key, required this.expense});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [Text(expense.name), Text("PHP ${expense.amount}")],
-      ),
+    return ListTile(
+      title: Text(expense.name),
+      subtitle: Text("PHP ${expense.amount}"),
     );
   }
 }
