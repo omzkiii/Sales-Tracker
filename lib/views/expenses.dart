@@ -13,9 +13,12 @@ class Expenses extends StatelessWidget {
       listenable: listenable,
       builder: (context, child) {
         listenable.getExpenses(listingId: listingId);
+        print(listenable.list);
         return Expanded(
           child: ListView(
-            children: listenable.list.map((item) => Text(item.name)).toList(),
+            children: listenable.list
+                .map((item) => Text(" ${item.name}"))
+                .toList(),
           ),
         );
       },
@@ -28,5 +31,6 @@ class ExpenseNotifier extends ChangeNotifier {
 
   Future<void> getExpenses({required int listingId}) async {
     list = await expenses(listingId: listingId);
+    notifyListeners();
   }
 }

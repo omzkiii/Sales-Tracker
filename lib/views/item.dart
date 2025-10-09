@@ -1,5 +1,6 @@
 import 'package:app/controllers/listing.dart';
 import 'package:app/models/listing.dart';
+import 'package:app/views/expenses.dart';
 import 'package:app/views/form_expense.dart';
 import 'package:app/views/form_listing.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class Item extends StatelessWidget {
             children: [
               Text("Price: ${listing.price}"),
               Text("Description: ${listing.desc}"),
+              Expenses(listingId: listing.id!),
               ElevatedButton(
                 onPressed: () async {
                   var result = await Navigator.push(
@@ -47,7 +49,9 @@ class Item extends StatelessWidget {
                 onPressed: () async {
                   var result = await Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => FormExpense()),
+                    MaterialPageRoute(
+                      builder: (context) => FormExpense(listingId: listing.id!),
+                    ),
                   );
                 },
                 child: Text("Add Expense"),
