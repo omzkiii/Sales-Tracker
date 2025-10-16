@@ -1,23 +1,28 @@
 import 'package:app/controllers/expense.dart';
 import 'package:app/models/expenses.dart';
+import 'package:app/views/expense_operations.dart';
 import 'package:flutter/material.dart';
 
 class Expenses extends StatelessWidget {
   final int listingId;
-  const Expenses({super.key, required this.listingId});
+  final ExpenseNotifier expenseNotifier;
+  const Expenses({
+    super.key,
+    required this.listingId,
+    required this.expenseNotifier,
+  });
 
   @override
   Widget build(BuildContext context) {
-    var listenable = ExpenseNotifier();
-    listenable.getExpenses(listingId: listingId);
+    expenseNotifier.loadExpenses(listingId);
     return ListenableBuilder(
-      listenable: listenable,
+      listenable: expenseNotifier,
       builder: (context, child) {
-        print(listenable.list);
+        print(expenseNotifier.list);
         return Container(
           child: Expanded(
             child: ListView(
-              children: listenable.list
+              children: expenseNotifier.list
                   .map((item) => ExpenseCard(expense: item))
                   .toList(),
             ),
@@ -43,14 +48,5 @@ class ExpenseCard extends StatelessWidget {
         },
       ),
     );
-  }
-}
-
-class ExpenseNotifier extends ChangeNotifier {
-  List<Expense> list = [];
-
-  Future<void> getExpenses({required int listingId}) async {
-    list = await expenses(listingId: listingId);
-    notifyListeners();
   }
 }

@@ -1,5 +1,6 @@
 import 'package:app/controllers/listing.dart';
 import 'package:app/models/listing.dart';
+import 'package:app/views/expense_operations.dart';
 import 'package:app/views/expenses.dart';
 import 'package:app/views/form_expense.dart';
 import 'package:app/views/form_listing.dart';
@@ -14,6 +15,7 @@ class Item extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var listenable = ItemNotifier();
+    var expenseNotifier = ExpenseNotifier();
     return ListenableBuilder(
       listenable: listenable,
       builder: (context, child) {
@@ -24,7 +26,10 @@ class Item extends StatelessWidget {
             children: [
               Text("Price: ${listing.price}"),
               Text("Description: ${listing.desc}"),
-              Expenses(listingId: listing.id!),
+              Expenses(
+                listingId: listing.id!,
+                expenseNotifier: expenseNotifier,
+              ),
               ElevatedButton(
                 onPressed: () async {
                   var result = await Navigator.push(
@@ -55,7 +60,10 @@ class Item extends StatelessWidget {
                   var result = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => FormExpense(listingId: listing.id!),
+                      builder: (context) => FormExpense(
+                        listingId: listing.id!,
+                        expenseNotifier: expenseNotifier,
+                      ),
                     ),
                   );
                 },

@@ -1,11 +1,17 @@
 import 'package:app/controllers/expense.dart';
 import 'package:app/models/expenses.dart';
+import 'package:app/views/expense_operations.dart';
 import 'package:app/views/input_field.dart';
 import 'package:flutter/material.dart';
 
 class FormExpense extends StatefulWidget {
   final int listingId;
-  const FormExpense({super.key, required this.listingId});
+  final ExpenseNotifier expenseNotifier;
+  const FormExpense({
+    super.key,
+    required this.listingId,
+    required this.expenseNotifier,
+  });
 
   @override
   State<FormExpense> createState() => _FormExpenseState();
@@ -67,7 +73,7 @@ class _FormExpenseState extends State<FormExpense> {
               amount: num.parse(amountController.text).toDouble(),
               desc: descContoller.text,
             );
-            insertExpense(expense);
+            widget.expenseNotifier.addToExpenses(expense);
             Navigator.pop(context, true);
           }
         },

@@ -11,7 +11,7 @@ Future<void> insertExpense(Expense expense) async {
   );
 }
 
-Future<List<Expense>> expenses({required int listingId}) async {
+Future<List<Expense>> expenses(int listingId) async {
   Database db = await DB.initDB();
   List<Map<String, Object?>> map = await db.query(
     "expenses",
