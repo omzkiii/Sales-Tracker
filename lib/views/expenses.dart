@@ -47,12 +47,15 @@ class ExpenseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      minTileHeight: 1,
       title: Text(expense.name),
       subtitle: AnimatedSize(
+        alignment: Alignment.topCenter,
         duration: Duration(milliseconds: 200),
         curve: Curves.linearToEaseOut,
         child: selected.value == expense.id
             ? Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
@@ -68,10 +71,7 @@ class ExpenseCard extends StatelessWidget {
                   ),
                 ],
               )
-            : Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text("PHP ${expense.amount}"),
-              ),
+            : Text("PHP ${expense.amount}"),
       ),
       onTap: () => {
         selected.value = selected.value == expense.id! ? -1 : expense.id!,
