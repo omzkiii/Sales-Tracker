@@ -1,7 +1,6 @@
 import 'package:app/models/expenses.dart';
 import 'package:app/views/expense_operations.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 class Expenses extends StatefulWidget {
   final int listingId;
@@ -28,14 +27,10 @@ class _ExpensesState extends State<Expenses> {
           child: ValueListenableBuilder<int>(
             valueListenable: selected,
             builder: (context, value, _) {
-              print(
-                "BUILDER LIST LENGTH: ${widget.expenseNotifier.list.length}",
-              );
               return AnimatedList(
                 key: listKey,
                 initialItemCount: widget.expenseNotifier.list.length,
                 itemBuilder: (context, index, animation) {
-                  print("BUILDER INDEX: $index");
                   var item = widget.expenseNotifier.list[index];
                   return SlideTransition(
                     position: animation.drive(
@@ -77,6 +72,7 @@ class ExpenseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      tileColor: selected.value == index ? Colors.lightGreen : null,
       minTileHeight: 1,
       title: Text(expense.name),
       subtitle: AnimatedSize(
@@ -97,6 +93,7 @@ class ExpenseCard extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {
+                      selected.value = -1;
                       expenseNotifier.removeFromExpenses(expense, index, this);
                     },
 
@@ -104,7 +101,7 @@ class ExpenseCard extends StatelessWidget {
                   ),
                 ],
               )
-            : Text("PHP ${expense.amount} ||||| INDEX : $index"),
+            : Text("PHP ${expense.amount}"),
       ),
       onTap: () => {selected.value = selected.value == index ? -1 : index},
     );
