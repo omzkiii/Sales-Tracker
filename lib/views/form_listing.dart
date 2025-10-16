@@ -23,10 +23,6 @@ class FormListing extends StatefulWidget {
 class _FormListingState extends State<FormListing> {
   final _formKey = GlobalKey<FormState>();
 
-  String _formTitle = "Update Listing";
-  Function _listOperation = updateListing;
-  IconData _floatingIcon = Icons.edit;
-
   late TextEditingController nameController;
   late TextEditingController descController;
   late TextEditingController priceController;
@@ -51,13 +47,16 @@ class _FormListingState extends State<FormListing> {
 
   @override
   Widget build(BuildContext context) {
+    String formTitle = "Update Listing";
+    Function listOperation = widget.listenable.changeListing;
+    IconData floatingIcon = Icons.edit;
     if (widget.isNew) {
-      _formTitle = "New Listing";
-      _listOperation = widget.listenable.insertToListings;
-      _floatingIcon = Icons.save;
+      formTitle = "New Listing";
+      listOperation = widget.listenable.insertToListings;
+      floatingIcon = Icons.save;
     }
     return Scaffold(
-      appBar: AppBar(title: Text(_formTitle)),
+      appBar: AppBar(title: Text(formTitle)),
       body: Form(
         key: _formKey,
         child: Column(
@@ -72,7 +71,7 @@ class _FormListingState extends State<FormListing> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(_floatingIcon),
+        child: Icon(floatingIcon),
         onPressed: () {
           if (_formKey.currentState!.validate()) {
             Listing listing = Listing(
@@ -81,7 +80,7 @@ class _FormListingState extends State<FormListing> {
               price: num.parse(priceController.text).toDouble(),
               desc: descController.text,
             );
-            _listOperation(listing);
+            listOperation(listing);
             Navigator.pop(context, true);
           }
         },

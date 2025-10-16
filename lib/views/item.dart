@@ -45,7 +45,7 @@ class Item extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  deleteListing(listing.id!);
+                  listingNotifier.removeFromListing(listing.id!);
                   Navigator.pop(context);
                 },
                 child: Text("Delete Listing"),
