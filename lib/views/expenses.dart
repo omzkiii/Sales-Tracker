@@ -40,16 +40,15 @@ class _ExpensesState extends State<Expenses> {
                   return SlideTransition(
                     position: animation.drive(
                       Tween<Offset>(
-                        begin: Offset(0, 0.3),
-                        end: Offset.zero,
-                      ).chain(CurveTween(curve: Curves.easeOut)),
+                        begin: Offset(0, 0.1),
+                        end: Offset(0, 0.1),
+                      ).chain(CurveTween(curve: Curves.easeInOut)),
                     ),
                     child: ExpenseCard(
                       expense: item,
                       selected: selected,
                       expenseNotifier: widget.expenseNotifier,
                       index: index,
-                      animationKey: listKey,
                     ),
                   );
                 },
@@ -66,14 +65,12 @@ class ExpenseCard extends StatelessWidget {
   final Expense expense;
   final ValueNotifier<int> selected;
   final ExpenseNotifier expenseNotifier;
-  final GlobalKey<AnimatedListState> animationKey;
   final int index;
   const ExpenseCard({
     super.key,
     required this.expense,
     required this.selected,
     required this.expenseNotifier,
-    required this.animationKey,
     required this.index,
   });
 
@@ -86,7 +83,7 @@ class ExpenseCard extends StatelessWidget {
         alignment: Alignment.topCenter,
         duration: Duration(milliseconds: 200),
         curve: Curves.linearToEaseOut,
-        child: selected.value != expense.id
+        child: selected.value == index
             ? Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,7 +92,7 @@ class ExpenseCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("PHP ${expense.amount}"),
-                      Text("${expense.desc}"),
+                      Text(expense.desc),
                     ],
                   ),
                   IconButton(
@@ -109,9 +106,7 @@ class ExpenseCard extends StatelessWidget {
               )
             : Text("PHP ${expense.amount} ||||| INDEX : $index"),
       ),
-      onTap: () => {
-        selected.value = selected.value == expense.id! ? -1 : expense.id!,
-      },
+      onTap: () => {selected.value = selected.value == index ? -1 : index},
     );
   }
 }
