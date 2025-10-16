@@ -1,6 +1,7 @@
 import 'package:app/models/expenses.dart';
 import 'package:app/views/expense_operations.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 class Expenses extends StatelessWidget {
   final int listingId;
@@ -52,8 +53,15 @@ class ExpenseCard extends StatelessWidget {
         curve: Curves.linearToEaseOut,
         child: selected.value == expense.id
             ? Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("PHP ${expense.amount}"),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("PHP ${expense.amount}"),
+                      Text("${expense.desc}"),
+                    ],
+                  ),
                   IconButton(
                     onPressed: () => print("delete"),
                     icon: Icon(Icons.delete),
@@ -65,7 +73,9 @@ class ExpenseCard extends StatelessWidget {
                 child: Text("PHP ${expense.amount}"),
               ),
       ),
-      onTap: () => {selected.value = expense.id!},
+      onTap: () => {
+        selected.value = selected.value == expense.id! ? -1 : expense.id!,
+      },
     );
   }
 }
