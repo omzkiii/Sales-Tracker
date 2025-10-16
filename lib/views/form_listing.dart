@@ -1,4 +1,3 @@
-import 'package:app/controllers/listing.dart';
 import 'package:app/models/listing.dart';
 import 'package:app/views/input_field.dart';
 import 'package:app/views/listing_operations.dart';

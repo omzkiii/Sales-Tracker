@@ -1,4 +1,3 @@
-import 'package:app/controllers/expense.dart';
 import 'package:app/models/expenses.dart';
 import 'package:app/views/expense_operations.dart';
 import 'package:flutter/material.dart';
@@ -6,11 +5,9 @@ import 'package:flutter/material.dart';
 class Expenses extends StatelessWidget {
   final int listingId;
   final ExpenseNotifier expenseNotifier;
-  const Expenses({
-    super.key,
-    required this.listingId,
-    required this.expenseNotifier,
-  });
+  Expenses({super.key, required this.listingId, required this.expenseNotifier});
+
+  final selected = ValueNotifier<int>(-1);
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +18,18 @@ class Expenses extends StatelessWidget {
         print(expenseNotifier.list);
         return Container(
           child: Expanded(
-            child: ListView(
-              children: expenseNotifier.list
-                  .map((item) => ExpenseCard(expense: item))
-                  .toList(),
+            child: ValueListenableBuilder(
+              valueListenable: selected,
+              builder: (context, value, _) {
+                return ListView(
+                  children: expenseNotifier.list
+                      .map(
+                        (item) =>
+                            ExpenseCard(expense: item, selected: selected),
+                      )
+                      .toList(),
+                );
+              },
             ),
           ),
         );
@@ -35,18 +40,32 @@ class Expenses extends StatelessWidget {
 
 class ExpenseCard extends StatelessWidget {
   final Expense expense;
-  const ExpenseCard({super.key, required this.expense});
+  final ValueNotifier<int> selected;
+  const ExpenseCard({super.key, required this.expense, required this.selected});
+
   @override
   Widget build(BuildContext context) {
-    var overlayController = OverlayPortalController();
     return ListTile(
       title: Text(expense.name),
-      subtitle: OverlayPortal(
-        controller: overlayController,
-        overlayChildBuilder: (context) {
-          return Text("PHP ${expense.amount}");
-        },
+      subtitle: AnimatedSize(
+        duration: Duration(milliseconds: 200),
+        curve: Curves.linearToEaseOut,
+        child: selected.value == expense.id
+            ? Row(
+                children: [
+                  Text("PHP ${expense.amount}"),
+                  IconButton(
+                    onPressed: () => print("delete"),
+                    icon: Icon(Icons.delete),
+                  ),
+                ],
+              )
+            : Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text("PHP ${expense.amount}"),
+              ),
       ),
+      onTap: () => {selected.value = expense.id!},
     );
   }
 }

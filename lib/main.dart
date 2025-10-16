@@ -1,6 +1,3 @@
-import 'package:app/controllers/listing.dart';
-import 'package:app/db.dart';
-import 'package:app/models/listing.dart';
 import 'package:app/views/form_listing.dart';
 import 'package:app/views/listing_operations.dart';
 import 'package:app/views/listings.dart';
