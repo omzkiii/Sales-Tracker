@@ -1,12 +1,20 @@
 import 'package:app/controllers/listing.dart';
 import 'package:app/models/listing.dart';
 import 'package:app/views/input_field.dart';
+import 'package:app/views/listing_operations.dart';
 import 'package:flutter/material.dart';
 
 class FormListing extends StatefulWidget {
   final bool isNew;
   final Listing? listing;
-  const FormListing({super.key, required this.isNew, this.listing});
+  final ListingNotifier listenable;
+
+  const FormListing({
+    super.key,
+    required this.isNew,
+    this.listing,
+    required this.listenable,
+  });
 
   @override
   State<FormListing> createState() => _FormListingState();
@@ -45,7 +53,7 @@ class _FormListingState extends State<FormListing> {
   Widget build(BuildContext context) {
     if (widget.isNew) {
       _formTitle = "New Listing";
-      _listOperation = insertListing;
+      _listOperation = widget.listenable.insertToListings;
       _floatingIcon = Icons.save;
     }
     return Scaffold(

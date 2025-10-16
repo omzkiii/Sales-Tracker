@@ -1,25 +1,33 @@
 import 'package:app/controllers/listing.dart';
 import 'package:app/models/listing.dart';
 import 'package:app/views/item.dart';
+import 'package:app/views/listing_operations.dart';
 import 'package:flutter/material.dart';
 
 class Listings extends StatelessWidget {
-  const Listings({super.key});
+  final ListingNotifier listingNotifier;
+  const Listings({super.key, required this.listingNotifier});
 
   @override
   Widget build(BuildContext context) {
-    var listenable = ListingNotifier();
+    listingNotifier.loadList();
     return Scaffold(
       body: Column(
         children: [
           ListenableBuilder(
-            listenable: listenable,
+            listenable: listingNotifier,
             builder: (context, child) {
-              listenable.loadList();
+              print("LISTINGS");
+              print(listingNotifier.list);
               return Expanded(
                 child: ListView(
-                  children: listenable.list
-                      .map((elem) => ListingCard(listing: elem))
+                  children: listingNotifier.list
+                      .map(
+                        (elem) => ListingCard(
+                          listing: elem,
+                          listingNotifier: listingNotifier,
+                        ),
+                      )
                       .toList(),
                 ),
               );
@@ -33,7 +41,12 @@ class Listings extends StatelessWidget {
 
 class ListingCard extends StatelessWidget {
   final Listing listing;
-  const ListingCard({super.key, required this.listing});
+  final ListingNotifier listingNotifier;
+  const ListingCard({
+    super.key,
+    required this.listing,
+    required this.listingNotifier,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -46,20 +59,13 @@ class ListingCard extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Item(item: listing)),
+            MaterialPageRoute(
+              builder: (context) =>
+                  Item(item: listing, listingNotifier: listingNotifier),
+            ),
           );
         },
       ),
     );
-  }
-}
-
-class ListingNotifier extends ChangeNotifier {
-  List<Listing> _list = [];
-  List<Listing> get list => _list;
-
-  Future<void> loadList() async {
-    _list = await listings();
-    notifyListeners();
   }
 }

@@ -9,10 +9,10 @@ class Expenses extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var listenable = ExpenseNotifier();
+    listenable.getExpenses(listingId: listingId);
     return ListenableBuilder(
       listenable: listenable,
       builder: (context, child) {
-        listenable.getExpenses(listingId: listingId);
         print(listenable.list);
         return Container(
           child: Expanded(
@@ -33,9 +33,15 @@ class ExpenseCard extends StatelessWidget {
   const ExpenseCard({super.key, required this.expense});
   @override
   Widget build(BuildContext context) {
+    var overlayController = OverlayPortalController();
     return ListTile(
       title: Text(expense.name),
-      subtitle: Text("PHP ${expense.amount}"),
+      subtitle: OverlayPortal(
+        controller: overlayController,
+        overlayChildBuilder: (context) {
+          return Text("PHP ${expense.amount}");
+        },
+      ),
     );
   }
 }

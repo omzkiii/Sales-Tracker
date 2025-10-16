@@ -3,11 +3,13 @@ import 'package:app/models/listing.dart';
 import 'package:app/views/expenses.dart';
 import 'package:app/views/form_expense.dart';
 import 'package:app/views/form_listing.dart';
+import 'package:app/views/listing_operations.dart';
 import 'package:flutter/material.dart';
 
 class Item extends StatelessWidget {
   final Listing item;
-  const Item({super.key, required this.item});
+  final ListingNotifier listingNotifier;
+  const Item({super.key, required this.item, required this.listingNotifier});
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +30,11 @@ class Item extends StatelessWidget {
                   var result = await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          FormListing(isNew: false, listing: listing),
+                      builder: (context) => FormListing(
+                        isNew: false,
+                        listing: listing,
+                        listenable: listingNotifier,
+                      ),
                     ),
                   );
                   if (result == true) {

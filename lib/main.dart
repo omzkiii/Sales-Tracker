@@ -1,5 +1,8 @@
+import 'package:app/controllers/listing.dart';
 import 'package:app/db.dart';
+import 'package:app/models/listing.dart';
 import 'package:app/views/form_listing.dart';
+import 'package:app/views/listing_operations.dart';
 import 'package:app/views/listings.dart';
 import 'package:flutter/material.dart';
 
@@ -18,14 +21,18 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
+    var listingController = ListingNotifier();
     return Scaffold(
-      body: Listings(),
+      body: Listings(listingNotifier: listingController),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => FormListing(isNew: true)),
+            MaterialPageRoute(
+              builder: (context) =>
+                  FormListing(isNew: true, listenable: listingController),
+            ),
           );
         },
         child: Icon(Icons.add),
