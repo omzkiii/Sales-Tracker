@@ -12,19 +12,16 @@ class ListingNotifier extends ChangeNotifier {
   }
 
   Future<void> insertToListings(Listing listing) async {
-    print("LISTING ADDED");
     await insertListing(listing);
     loadList();
   }
 
   Future<void> changeListing(Listing listing) async {
-    print("LISTING ADDED");
     await updateListing(listing);
     loadList();
   }
 
   Future<void> removeFromListing(int id) async {
-    print("LISTING ADDED");
     await deleteListing(id);
     loadList();
   }
