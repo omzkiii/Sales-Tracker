@@ -31,7 +31,6 @@ class Item extends StatelessWidget {
                   Navigator.pop(context);
                 },
               ),
-
               IconButton(
                 icon: Icon(Icons.edit),
                 onPressed: () async {
@@ -60,21 +59,23 @@ class Item extends StatelessWidget {
                 listingId: listing.id!,
                 expenseNotifier: expenseNotifier,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FormExpense(
-                        listingId: listing.id!,
-                        expenseNotifier: expenseNotifier,
-                      ),
-                    ),
-                  );
-                },
-                child: Text("Add Expense"),
-              ),
             ],
+          ),
+
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FormExpense(
+                    listingId: listing.id!,
+                    expenseNotifier: expenseNotifier,
+                  ),
+                ),
+              );
+            },
           ),
         );
       },
