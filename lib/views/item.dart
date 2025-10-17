@@ -63,8 +63,9 @@ class Item extends StatelessWidget {
           ),
 
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
+          floatingActionButton: FloatingActionButton.extended(
+            icon: Icon(Icons.add),
+            label: Text("Add Expense"),
             onPressed: () {
               Navigator.push(
                 context,
