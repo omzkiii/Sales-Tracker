@@ -10,14 +10,13 @@ class Listings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     listingNotifier.loadList();
+    print("LOADED");
     return Scaffold(
       body: Column(
         children: [
           ListenableBuilder(
             listenable: listingNotifier,
             builder: (context, child) {
-              print("LISTINGS");
-              print(listingNotifier.list);
               return Expanded(
                 child: ListView(
                   children: listingNotifier.list

@@ -14,12 +14,12 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var listenable = ItemNotifier();
+    var itemNotifier = ItemNotifier();
     var expenseNotifier = ExpenseNotifier();
     return ListenableBuilder(
-      listenable: listenable,
+      listenable: itemNotifier,
       builder: (context, child) {
-        Listing listing = listenable.item ?? item;
+        Listing listing = itemNotifier.item ?? item;
         return Scaffold(
           appBar: AppBar(title: Text(listing.name)),
           body: Column(
@@ -43,7 +43,7 @@ class Item extends StatelessWidget {
                     ),
                   );
                   if (result == true) {
-                    listenable.refreshItem(listing.id!);
+                    itemNotifier.refreshItem(listing.id!);
                   }
                 },
                 child: Text("Edit Listing"),
@@ -56,8 +56,8 @@ class Item extends StatelessWidget {
                 child: Text("Delete Listing"),
               ),
               ElevatedButton(
-                onPressed: () async {
-                  var result = await Navigator.push(
+                onPressed: () {
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => FormExpense(
