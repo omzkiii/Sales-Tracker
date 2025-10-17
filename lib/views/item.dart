@@ -31,6 +31,21 @@ class Item extends StatelessWidget {
                   Navigator.pop(context);
                 },
               ),
+
+              IconButton(
+                icon: Icon(Icons.edit),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FormExpense(
+                        listingId: listing.id!,
+                        expenseNotifier: expenseNotifier,
+                      ),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
           body: Column(
@@ -58,20 +73,6 @@ class Item extends StatelessWidget {
                   }
                 },
                 child: Text("Edit Listing"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FormExpense(
-                        listingId: listing.id!,
-                        expenseNotifier: expenseNotifier,
-                      ),
-                    ),
-                  );
-                },
-                child: Text("Add Expense"),
               ),
             ],
           ),
