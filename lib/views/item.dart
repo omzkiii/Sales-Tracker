@@ -34,29 +34,6 @@ class Item extends StatelessWidget {
 
               IconButton(
                 icon: Icon(Icons.edit),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FormExpense(
-                        listingId: listing.id!,
-                        expenseNotifier: expenseNotifier,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-          body: Column(
-            children: [
-              Text("Price: ${listing.price}"),
-              Text("Description: ${listing.desc}"),
-              Expenses(
-                listingId: listing.id!,
-                expenseNotifier: expenseNotifier,
-              ),
-              ElevatedButton(
                 onPressed: () async {
                   var result = await Navigator.push(
                     context,
@@ -72,7 +49,30 @@ class Item extends StatelessWidget {
                     itemNotifier.refreshItem(listing.id!);
                   }
                 },
-                child: Text("Edit Listing"),
+              ),
+            ],
+          ),
+          body: Column(
+            children: [
+              Text("Price: ${listing.price}"),
+              Text("Description: ${listing.desc}"),
+              Expenses(
+                listingId: listing.id!,
+                expenseNotifier: expenseNotifier,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FormExpense(
+                        listingId: listing.id!,
+                        expenseNotifier: expenseNotifier,
+                      ),
+                    ),
+                  );
+                },
+                child: Text("Add Expense"),
               ),
             ],
           ),
