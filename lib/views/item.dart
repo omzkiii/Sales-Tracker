@@ -21,7 +21,18 @@ class Item extends StatelessWidget {
       builder: (context, child) {
         Listing listing = itemNotifier.item ?? item;
         return Scaffold(
-          appBar: AppBar(title: Text(listing.name)),
+          appBar: AppBar(
+            title: Text(listing.name),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  listingNotifier.removeFromListing(listing.id!);
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
           body: Column(
             children: [
               Text("Price: ${listing.price}"),
@@ -47,13 +58,6 @@ class Item extends StatelessWidget {
                   }
                 },
                 child: Text("Edit Listing"),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  listingNotifier.removeFromListing(listing.id!);
-                  Navigator.pop(context);
-                },
-                child: Text("Delete Listing"),
               ),
               ElevatedButton(
                 onPressed: () {
