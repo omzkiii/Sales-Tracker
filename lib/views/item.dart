@@ -33,12 +33,17 @@ class _ItemState extends State<Item> {
       appBar: AppBar(
         title: Text(listing.name),
         actions: [
-          IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () {
-              widget.listingNotifier.removeFromListing(listing.id!);
-              Navigator.pop(context);
-            },
+          Container(
+            alignment: Alignment.bottomRight,
+            child: TextButton(
+              onPressed: () {
+                setState(() {
+                  status = status == "sold" ? "listed" : "sold";
+                });
+                widget.listingNotifier.changeListingStatus(listing, status);
+              },
+              child: Text(status.toUpperCase()),
+            ),
           ),
           IconButton(
             icon: Icon(Icons.edit),
@@ -58,27 +63,51 @@ class _ItemState extends State<Item> {
               });
             },
           ),
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              widget.listingNotifier.removeFromListing(listing.id!);
+              Navigator.pop(context);
+            },
+          ),
         ],
       ),
       body: Container(
-        padding: EdgeInsets.all(21),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("Price: ${listing.price}"),
-            Text("Status: ${status}"),
-            Text("${listing.desc}"),
-            FilledButton(
-              onPressed: () {
-                setState(() {
-                  status = status == "sold" ? "listed" : "sold";
-                });
-                print(status);
-                widget.listingNotifier.changeListingStatus(listing, status);
-              },
-              child: Text(status),
+            Container(
+              padding: EdgeInsets.all(21),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Price: ${listing.price}"),
+                  Text("${listing.desc}"),
+                ],
+              ),
             ),
 
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface,
+                border: Border(
+                  top: BorderSide(
+                    color: Theme.of(context).hoverColor,
+                    width: 1,
+                  ),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(context).shadowColor.withOpacity(0.2),
+                    blurRadius: 4,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
+              ),
+              child: Text("Expenses", style: TextStyle(fontSize: 21)),
+            ),
             Expenses(listingId: listing.id!, expenseNotifier: expenseNotifier),
           ],
         ),
