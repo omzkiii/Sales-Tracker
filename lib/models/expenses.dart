@@ -1,5 +1,5 @@
 class Expense {
-  final int? id;
+  int? id;
   final int listingId;
   final String name;
   final double amount;

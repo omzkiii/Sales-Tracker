@@ -94,6 +94,7 @@ class ExpenseCard extends StatelessWidget {
                   IconButton(
                     onPressed: () {
                       selected.value = -1;
+                      print(expense);
                       expenseNotifier.removeFromExpenses(expense, index, this);
                     },
 

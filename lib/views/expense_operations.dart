@@ -6,6 +6,9 @@ class ExpenseNotifier extends ChangeNotifier {
   final GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
   final List<Expense> list = [];
 
+  double get totalExpenses =>
+      list.map((e) => e.amount).fold(0.0, (total, amount) => total + amount);
+
   Future<void> loadExpenses(int listingId) async {
     print("Expenses Loaded");
     final loaded = await expenses(listingId);
@@ -14,19 +17,23 @@ class ExpenseNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addToExpenses(Expense expense) {
+  void addToExpenses(Expense expense) async {
+    int id = await insertExpense(expense);
+    expense.id = id;
     list.add(expense);
     listKey.currentState?.insertItem(list.length - 1);
-    insertExpense(expense);
+    notifyListeners();
   }
 
   void removeFromExpenses(Expense expense, int index, Widget child) {
+    print("WILL REMOVE: $expense");
     list.removeAt(index);
     listKey.currentState?.removeItem(
       index,
       (context, animation) =>
           SizeTransition(sizeFactor: animation, child: child),
     );
+    notifyListeners();
     deleteExpense(expense.id!);
   }
 }

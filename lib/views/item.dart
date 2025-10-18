@@ -78,7 +78,16 @@ class Item extends StatelessWidget {
               );
             },
           ),
-          bottomNavigationBar: BottomAppBar(child: Text("Total Expenses: ")),
+          bottomNavigationBar: BottomAppBar(
+            child: ListenableBuilder(
+              listenable: expenseNotifier,
+              builder: (context, child) {
+                return Text(
+                  "Total Expenses: PHP ${expenseNotifier.totalExpenses}",
+                );
+              },
+            ),
+          ),
         );
       },
     );

@@ -2,9 +2,9 @@ import 'package:app/db.dart';
 import 'package:app/models/expenses.dart';
 import 'package:sqflite/sqflite.dart';
 
-Future<void> insertExpense(Expense expense) async {
+Future<int> insertExpense(Expense expense) async {
   Database db = await DB.initDB();
-  await db.insert(
+  return await db.insert(
     "expenses",
     expense.toMap(),
     conflictAlgorithm: ConflictAlgorithm.replace,
