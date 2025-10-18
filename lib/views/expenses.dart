@@ -1,4 +1,5 @@
 import 'package:app/models/expenses.dart';
+import 'package:app/views/delete_dialog.dart';
 import 'package:app/views/expense_operations.dart';
 import 'package:flutter/material.dart';
 
@@ -128,12 +129,17 @@ class ExpenseCard extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           selected.value = -1;
-                          print(expense);
-                          expenseNotifier.removeFromExpenses(
-                            expense,
-                            index,
-                            this,
+                          showDeleteDialog(
+                            context,
+                            expense.name,
+                            [expense, index, this],
+                            expenseNotifier.removeFromExpenses,
                           );
+                          // expenseNotifier.removeFromExpenses(
+                          //   expense,
+                          //   index,
+                          //   this,
+                          // );
                         },
                         child: Text(
                           "Delete",
