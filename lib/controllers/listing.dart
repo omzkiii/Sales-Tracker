@@ -50,6 +50,7 @@ Future<void> updateListingStatus(Listing listing, String status) async {
   Database db = await DB.initDB();
   print("UPDATING: ${listing.name} status");
   var newListing = listing.copyWith(status: status);
+  print(newListing);
   await db.update(
     "listings",
     newListing.toMap(),

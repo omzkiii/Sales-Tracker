@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 class FormListing extends StatefulWidget {
   final bool isNew;
   final Listing? listing;
-  final ListingNotifier listenable;
+  final ListingNotifier listingNotifier;
 
   const FormListing({
     super.key,
     required this.isNew,
     this.listing,
-    required this.listenable,
+    required this.listingNotifier,
   });
 
   @override
@@ -47,11 +47,11 @@ class _FormListingState extends State<FormListing> {
   @override
   Widget build(BuildContext context) {
     String formTitle = "Update Listing";
-    Function listOperation = widget.listenable.changeListing;
+    Function listOperation = widget.listingNotifier.changeListing;
     IconData floatingIcon = Icons.edit;
     if (widget.isNew) {
       formTitle = "New Listing";
-      listOperation = widget.listenable.insertToListings;
+      listOperation = widget.listingNotifier.insertToListings;
       floatingIcon = Icons.save;
     }
     return Scaffold(
@@ -80,7 +80,7 @@ class _FormListingState extends State<FormListing> {
               desc: descController.text,
             );
             listOperation(listing);
-            Navigator.pop(context, true);
+            Navigator.pop(context, listing);
           }
         },
       ),

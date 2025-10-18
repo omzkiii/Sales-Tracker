@@ -28,7 +28,7 @@ class _AppState extends State<App> {
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  FormListing(isNew: true, listenable: listingController),
+                  FormListing(isNew: true, listingNotifier: listingController),
             ),
           );
         },

@@ -7,107 +7,111 @@ import 'package:app/views/form_listing.dart';
 import 'package:app/views/listing_operations.dart';
 import 'package:flutter/material.dart';
 
-class Item extends StatelessWidget {
+class Item extends StatefulWidget {
   final Listing item;
   final ListingNotifier listingNotifier;
   const Item({super.key, required this.item, required this.listingNotifier});
 
   @override
-  Widget build(BuildContext context) {
-    var itemNotifier = ItemNotifier();
-    var expenseNotifier = ExpenseNotifier();
-    return ListenableBuilder(
-      listenable: itemNotifier,
-      builder: (context, child) {
-        Listing listing = itemNotifier.item ?? item;
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(listing.name),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () {
-                  listingNotifier.removeFromListing(listing.id!);
-                  Navigator.pop(context);
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () async {
-                  var result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FormListing(
-                        isNew: false,
-                        listing: listing,
-                        listenable: listingNotifier,
-                      ),
-                    ),
-                  );
-                  if (result == true) {
-                    itemNotifier.refreshItem(listing.id!);
-                  }
-                },
-              ),
-            ],
-          ),
-          body: Column(
-            children: [
-              Text("Price: ${listing.price}"),
-              Text("Description: ${listing.desc}"),
-              Expenses(
-                listingId: listing.id!,
-                expenseNotifier: expenseNotifier,
-              ),
-            ],
-          ),
+  State<Item> createState() => _ItemState();
+}
 
-          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-          floatingActionButton: FloatingActionButton.extended(
-            icon: Icon(Icons.add),
-            label: Text("Add Expense"),
+class _ItemState extends State<Item> {
+  late String status;
+  late Listing listing;
+  @override
+  void initState() {
+    super.initState();
+    status = widget.item.status == "sold" ? "listed" : "sold";
+    listing = widget.item;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var expenseNotifier = ExpenseNotifier();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(listing.name),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.delete),
             onPressed: () {
-              Navigator.push(
+              widget.listingNotifier.removeFromListing(listing.id!);
+              Navigator.pop(context);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.edit),
+            onPressed: () async {
+              var result = await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => FormExpense(
-                    listingId: listing.id!,
-                    expenseNotifier: expenseNotifier,
+                  builder: (context) => FormListing(
+                    isNew: false,
+                    listing: listing,
+                    listingNotifier: widget.listingNotifier,
                   ),
                 ),
               );
+              setState(() {
+                listing = result;
+              });
             },
           ),
-          bottomNavigationBar: BottomAppBar(
-            child: ListenableBuilder(
-              listenable: expenseNotifier,
-              builder: (context, child) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Total Expenses: PHP ${expenseNotifier.totalExpenses}",
-                    ),
-                    Text(
-                      "Total Profit: PHP ${listing.price - expenseNotifier.totalExpenses}",
-                    ),
-                  ],
-                );
-              },
-            ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Text("Price: ${listing.price}"),
+          Text("Status: ${status}"),
+          Text("Description: ${listing.desc}"),
+          FilledButton(
+            onPressed: () {
+              setState(() {
+                status = status == "sold" ? "listed" : "sold";
+              });
+              print(status);
+              widget.listingNotifier.changeListingStatus(listing, status);
+            },
+            child: Text(status),
           ),
-        );
-      },
+
+          Expenses(listingId: listing.id!, expenseNotifier: expenseNotifier),
+        ],
+      ),
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: FloatingActionButton.extended(
+        icon: Icon(Icons.add),
+        label: Text("Add Expense"),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => FormExpense(
+                listingId: listing.id!,
+                expenseNotifier: expenseNotifier,
+              ),
+            ),
+          );
+        },
+      ),
+      bottomNavigationBar: BottomAppBar(
+        child: ListenableBuilder(
+          listenable: expenseNotifier,
+          builder: (context, child) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Total Expenses: PHP ${expenseNotifier.totalExpenses}"),
+                Text(
+                  "Total Profit: PHP ${listing.price - expenseNotifier.totalExpenses}",
+                ),
+              ],
+            );
+          },
+        ),
+      ),
     );
-  }
-}
-
-class ItemNotifier extends ChangeNotifier {
-  Listing? item;
-
-  Future<void> refreshItem(int id) async {
-    item = await getListing(id);
-    notifyListeners();
-    print("Item refreshed");
   }
 }

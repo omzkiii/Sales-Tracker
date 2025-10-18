@@ -25,4 +25,9 @@ class ListingNotifier extends ChangeNotifier {
     await deleteListing(id);
     loadList();
   }
+
+  Future<void> changeListingStatus(Listing listing, String status) async {
+    await updateListingStatus(listing, status);
+    loadList();
+  }
 }
