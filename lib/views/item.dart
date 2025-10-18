@@ -82,8 +82,16 @@ class Item extends StatelessWidget {
             child: ListenableBuilder(
               listenable: expenseNotifier,
               builder: (context, child) {
-                return Text(
-                  "Total Expenses: PHP ${expenseNotifier.totalExpenses}",
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Total Expenses: PHP ${expenseNotifier.totalExpenses}",
+                    ),
+                    Text(
+                      "Total Profit: PHP ${listing.price - expenseNotifier.totalExpenses}",
+                    ),
+                  ],
                 );
               },
             ),
