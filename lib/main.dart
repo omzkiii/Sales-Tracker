@@ -1,11 +1,49 @@
 import 'package:app/views/form_listing.dart';
 import 'package:app/views/listing_operations.dart';
 import 'package:app/views/listings.dart';
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 
+final _defaultSeedColor = Colors.teal;
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MaterialApp(home: App()));
+  runApp(RootApp());
+}
+
+class RootApp extends StatelessWidget {
+  const RootApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return DynamicColorBuilder(
+      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+        final lightColorScheme =
+            lightDynamic?.harmonized() ??
+            ColorScheme.fromSeed(
+              seedColor: _defaultSeedColor,
+              brightness: Brightness.light,
+            );
+        final darkColorScheme =
+            darkDynamic?.harmonized() ??
+            ColorScheme.fromSeed(
+              seedColor: _defaultSeedColor,
+              brightness: Brightness.dark,
+            );
+
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Transak',
+          themeMode: ThemeMode.system,
+          theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+          darkTheme: ThemeData(
+            useMaterial3: true,
+            colorScheme: darkColorScheme,
+          ),
+          home: const App(),
+        );
+      },
+    );
+  }
 }
 
 class App extends StatefulWidget {
@@ -22,11 +60,13 @@ class _AppState extends State<App> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: TabBar(
-          tabs: [
-            Tab(text: "Listed"),
-            Tab(text: "Sold"),
-          ],
+        appBar: AppBar(
+          title: TabBar(
+            tabs: [
+              Tab(text: "Listed"),
+              Tab(text: "Sold"),
+            ],
+          ),
         ),
         body: TabBarView(
           children: [
@@ -34,7 +74,7 @@ class _AppState extends State<App> {
             Listings(listingNotifier: listingController, status: "sold"),
           ],
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Navigator.push(
@@ -48,24 +88,6 @@ class _AppState extends State<App> {
             );
           },
           child: Icon(Icons.add),
-        ),
-        bottomNavigationBar: BottomAppBar(
-          elevation: 0.0,
-          child: Row(
-            children: [
-              IconButton(
-                tooltip: 'Open navigation menu',
-                icon: const Icon(Icons.menu),
-                onPressed: () {},
-              ),
-              Spacer(),
-              IconButton(
-                tooltip: 'Search',
-                icon: const Icon(Icons.search),
-                onPressed: () {},
-              ),
-            ],
-          ),
         ),
       ),
     );

@@ -60,24 +60,28 @@ class _ItemState extends State<Item> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Text("Price: ${listing.price}"),
-          Text("Status: ${status}"),
-          Text("Description: ${listing.desc}"),
-          FilledButton(
-            onPressed: () {
-              setState(() {
-                status = status == "sold" ? "listed" : "sold";
-              });
-              print(status);
-              widget.listingNotifier.changeListingStatus(listing, status);
-            },
-            child: Text(status),
-          ),
+      body: Container(
+        padding: EdgeInsets.all(21),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Price: ${listing.price}"),
+            Text("Status: ${status}"),
+            Text("${listing.desc}"),
+            FilledButton(
+              onPressed: () {
+                setState(() {
+                  status = status == "sold" ? "listed" : "sold";
+                });
+                print(status);
+                widget.listingNotifier.changeListingStatus(listing, status);
+              },
+              child: Text(status),
+            ),
 
-          Expenses(listingId: listing.id!, expenseNotifier: expenseNotifier),
-        ],
+            Expenses(listingId: listing.id!, expenseNotifier: expenseNotifier),
+          ],
+        ),
       ),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

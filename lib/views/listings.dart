@@ -59,7 +59,6 @@ class ListingCard extends StatelessWidget {
       child: ListTile(
         title: Text(listing.name),
         subtitle: Text(listing.price.toString()),
-        tileColor: Colors.red,
         onTap: () {
           Navigator.push(
             context,

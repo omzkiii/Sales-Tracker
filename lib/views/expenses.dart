@@ -39,11 +39,23 @@ class _ExpensesState extends State<Expenses> {
                         end: Offset(0, 0.1),
                       ).chain(CurveTween(curve: Curves.easeInOut)),
                     ),
-                    child: ExpenseCard(
-                      expense: item,
-                      selected: selected,
-                      expenseNotifier: widget.expenseNotifier,
-                      index: index,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: index < widget.expenseNotifier.list.length
+                              ? BorderSide(
+                                  color: Theme.of(context).highlightColor,
+                                  width: 1,
+                                )
+                              : BorderSide.none,
+                        ),
+                      ),
+                      child: ExpenseCard(
+                        expense: item,
+                        selected: selected,
+                        expenseNotifier: widget.expenseNotifier,
+                        index: index,
+                      ),
                     ),
                   );
                 },
@@ -72,7 +84,9 @@ class ExpenseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: selected.value == index ? Colors.lightGreen : null,
+      tileColor: selected.value == index
+          ? Theme.of(context).colorScheme.surface
+          : null,
       minTileHeight: 1,
       title: Text(expense.name),
       subtitle: AnimatedSize(
@@ -80,7 +94,7 @@ class ExpenseCard extends StatelessWidget {
         duration: Duration(milliseconds: 200),
         curve: Curves.linearToEaseOut,
         child: selected.value == index
-            ? Row(
+            ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -91,18 +105,51 @@ class ExpenseCard extends StatelessWidget {
                       Text(expense.desc),
                     ],
                   ),
-                  IconButton(
-                    onPressed: () {
-                      selected.value = -1;
-                      print(expense);
-                      expenseNotifier.removeFromExpenses(expense, index, this);
-                    },
-
-                    icon: Icon(Icons.delete),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          selected.value = -1;
+                          print(expense);
+                          expenseNotifier.removeFromExpenses(
+                            expense,
+                            index,
+                            this,
+                          );
+                        },
+                        child: Text(
+                          "Edit",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          selected.value = -1;
+                          print(expense);
+                          expenseNotifier.removeFromExpenses(
+                            expense,
+                            index,
+                            this,
+                          );
+                        },
+                        child: Text(
+                          "Delete",
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               )
-            : Text("PHP ${expense.amount}"),
+            : Container(
+                alignment: AlignmentGeometry.centerRight,
+                child: Text("PHP ${expense.amount}"),
+              ),
       ),
       onTap: () => {selected.value = selected.value == index ? -1 : index},
     );
