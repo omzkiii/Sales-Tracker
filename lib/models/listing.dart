@@ -1,11 +1,11 @@
-import 'package:app/models/expenses.dart';
-
 class Listing {
   final int? id;
   final String name;
   final double price;
   final String status;
   final String desc;
+
+  get priceFixed => price.toStringAsFixed(2);
 
   Listing({
     this.id,

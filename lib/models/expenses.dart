@@ -5,6 +5,8 @@ class Expense {
   final double amount;
   final String desc;
 
+  get amountFixed => amount.toStringAsFixed(2);
+
   Expense({
     this.id,
     required this.listingId,

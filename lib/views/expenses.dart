@@ -101,7 +101,7 @@ class ExpenseCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("PHP ${expense.amount}"),
+                      Text("₱ ${expense.amountFixed}"),
                       Text(expense.desc),
                     ],
                   ),
@@ -148,7 +148,10 @@ class ExpenseCard extends StatelessWidget {
               )
             : Container(
                 alignment: AlignmentGeometry.centerRight,
-                child: Text("PHP ${expense.amount}"),
+                child: Text(
+                  "₱ ${expense.amountFixed}",
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                ),
               ),
       ),
       onTap: () => {selected.value = selected.value == index ? -1 : index},

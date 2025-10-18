@@ -1,4 +1,5 @@
 import 'package:app/models/listing.dart';
+import 'package:app/views/delete_dialog.dart';
 import 'package:app/views/expense_operations.dart';
 import 'package:app/views/expenses.dart';
 import 'package:app/views/form_expense.dart';
@@ -65,10 +66,16 @@ class _ItemState extends State<Item> {
           ),
           IconButton(
             icon: Icon(Icons.delete),
-            onPressed: () {
-              widget.listingNotifier.removeFromListing(listing.id!);
-              Navigator.pop(context);
+            onPressed: () async {
+              String? result = await showDeleteDialog(context, listing.name, [
+                listing.id!,
+              ], widget.listingNotifier.removeFromListing);
+              if (!context.mounted) return;
+              if (result == 'OK') {
+                Navigator.pop(context);
+              }
             },
+            // widget.listingNotifier.removeFromListing(listing.id!);
           ),
         ],
       ),
@@ -81,8 +88,14 @@ class _ItemState extends State<Item> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Price: ${listing.price}"),
-                  Text("${listing.desc}"),
+                  Text(
+                    "₱ ${listing.priceFixed}",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  Text(listing.desc),
                 ],
               ),
             ),
@@ -136,9 +149,11 @@ class _ItemState extends State<Item> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Total Expenses: PHP ${expenseNotifier.totalExpenses}"),
                 Text(
-                  "Total Profit: PHP ${listing.price - expenseNotifier.totalExpenses}",
+                  "Total Expenses: ₱ ${expenseNotifier.totalExpenses.toStringAsFixed(2)}",
+                ),
+                Text(
+                  "Total Profit: ₱ ${(listing.price - expenseNotifier.totalExpenses).toStringAsFixed(2)}",
                 ),
               ],
             );
