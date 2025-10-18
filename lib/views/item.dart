@@ -62,7 +62,7 @@ class Item extends StatelessWidget {
             ],
           ),
 
-          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
           floatingActionButton: FloatingActionButton.extended(
             icon: Icon(Icons.add),
             label: Text("Add Expense"),
@@ -78,6 +78,7 @@ class Item extends StatelessWidget {
               );
             },
           ),
+          bottomNavigationBar: BottomAppBar(child: Text("Total Expenses: ")),
         );
       },
     );
