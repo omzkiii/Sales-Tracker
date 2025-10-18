@@ -22,13 +22,14 @@ class _ItemState extends State<Item> {
   @override
   void initState() {
     super.initState();
-    status = widget.item.status == "sold" ? "listed" : "sold";
+    status = widget.item.status;
     listing = widget.item;
   }
 
   @override
   Widget build(BuildContext context) {
     var expenseNotifier = ExpenseNotifier();
+    print("ITEM RELOAD: ${widget.item.status}");
     return Scaffold(
       appBar: AppBar(
         title: Text(listing.name),

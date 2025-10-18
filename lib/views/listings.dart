@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 
 class Listings extends StatelessWidget {
   final ListingNotifier listingNotifier;
-  const Listings({super.key, required this.listingNotifier});
+  final String status;
+  const Listings({
+    super.key,
+    required this.listingNotifier,
+    required this.status,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +25,7 @@ class Listings extends StatelessWidget {
               return Expanded(
                 child: ListView(
                   children: listingNotifier.list
+                      .where((elem) => elem.status == status)
                       .map(
                         (elem) => ListingCard(
                           listing: elem,
