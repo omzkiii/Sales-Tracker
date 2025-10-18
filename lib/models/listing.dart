@@ -43,11 +43,11 @@ class Listing {
     String? desc,
   }) {
     return Listing(
-      id: this.id,
-      name: this.name,
-      price: this.price,
-      status: this.status,
-      desc: this.desc,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      status: status ?? this.status,
+      desc: desc ?? this.desc,
     );
   }
 
