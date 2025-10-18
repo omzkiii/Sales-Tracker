@@ -45,3 +45,15 @@ Future<void> updateListing(Listing listing) async {
     whereArgs: [listing.id],
   );
 }
+
+Future<void> updateListingStatus(Listing listing, String status) async {
+  Database db = await DB.initDB();
+  print("UPDATING: ${listing.name} status");
+  var newListing = listing.copyWith(status: status);
+  await db.update(
+    "listings",
+    newListing.toMap(),
+    where: "id = ?",
+    whereArgs: [newListing.id],
+  );
+}
