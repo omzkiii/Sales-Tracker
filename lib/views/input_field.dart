@@ -21,6 +21,9 @@ class InputField<T> extends StatelessWidget {
                 controller: controller,
                 decoration: InputDecoration(labelText: inputName),
                 validator: (value) {
+                  if (inputName == "Description") {
+                    return null;
+                  }
                   if (value == null || value.isEmpty) {
                     return 'Please input ${inputName.toLowerCase()}.';
                   }
