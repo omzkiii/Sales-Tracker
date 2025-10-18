@@ -1,3 +1,5 @@
+import 'package:app/models/expenses.dart';
+
 class Listing {
   final int? id;
   final String name;
@@ -31,6 +33,22 @@ class Listing {
       'status': status,
       'desc': desc,
     };
+  }
+
+  Listing copyWith({
+    int? id,
+    String? name,
+    double? price,
+    String? status,
+    String? desc,
+  }) {
+    return Listing(
+      id: this.id,
+      name: this.name,
+      price: this.price,
+      status: this.status,
+      desc: this.desc,
+    );
   }
 
   @override
