@@ -68,8 +68,11 @@ class ListingCard extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              colorScheme.primary.withOpacity(0.9),
-              colorScheme.inversePrimary,
+              theme.colorScheme.surface.withBlue(255).withGreen(220),
+              theme.colorScheme.surface.withBlue(255).withGreen(180),
+              theme.colorScheme.surface.withBlue(255).withGreen(160),
+              theme.colorScheme.surface.withBlue(255).withGreen(140),
+              theme.colorScheme.primary.withBlue(255).withGreen(100),
             ],
           ),
           borderRadius: BorderRadius.circular(16),
