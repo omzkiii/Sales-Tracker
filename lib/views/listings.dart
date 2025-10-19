@@ -27,9 +27,12 @@ class Listings extends StatelessWidget {
                   children: listingNotifier.list
                       .where((elem) => elem.status == status)
                       .map(
-                        (elem) => ListingCard(
-                          listing: elem,
-                          listingNotifier: listingNotifier,
+                        (elem) => Container(
+                          padding: EdgeInsets.all(10),
+                          child: ListingCard(
+                            listing: elem,
+                            listingNotifier: listingNotifier,
+                          ),
                         ),
                       )
                       .toList(),
@@ -54,20 +57,54 @@ class ListingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
     return Hero(
       tag: "${listing.id}",
-      child: ListTile(
-        title: Text(listing.name),
-        subtitle: Text("₱ ${listing.priceFixed}"),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  Item(item: listing, listingNotifier: listingNotifier),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              colorScheme.primary.withOpacity(0.9),
+              colorScheme.inversePrimary,
+            ],
+          ),
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              // color: colorScheme.shadow.withOpacity(0.2),
+              blurRadius: 6,
+              offset: const Offset(0, 3),
             ),
-          );
-        },
+          ],
+        ),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          elevation: 0,
+          color: Colors.transparent,
+          clipBehavior: Clip.antiAlias,
+          child: ListTile(
+            title: Text(
+              listing.name,
+              style: theme.textTheme.titleMedium?.copyWith(color: Colors.white),
+            ),
+            subtitle: Text("₱ ${listing.priceFixed}"),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      Item(item: listing, listingNotifier: listingNotifier),
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
