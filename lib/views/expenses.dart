@@ -113,11 +113,6 @@ class ExpenseCard extends StatelessWidget {
                         onPressed: () {
                           selected.value = -1;
                           print(expense);
-                          expenseNotifier.removeFromExpenses(
-                            expense,
-                            index,
-                            this,
-                          );
                         },
                         child: Text(
                           "Edit",

@@ -58,7 +58,7 @@ class ListingCard extends StatelessWidget {
       tag: "${listing.id}",
       child: ListTile(
         title: Text(listing.name),
-        subtitle: Text(listing.price.toString()),
+        subtitle: Text("₱ ${listing.priceFixed}"),
         onTap: () {
           Navigator.push(
             context,

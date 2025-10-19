@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Expense {
   int? id;
   final int listingId;
@@ -5,7 +7,10 @@ class Expense {
   final double amount;
   final String desc;
 
-  get amountFixed => amount.toStringAsFixed(2);
+  String get amountFixed {
+    final formatCurrency = NumberFormat.compact(locale: 'en_US');
+    return formatCurrency.format(amount);
+  }
 
   Expense({
     this.id,

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Listing {
   final int? id;
   final String name;
@@ -5,7 +7,10 @@ class Listing {
   final String status;
   final String desc;
 
-  get priceFixed => price.toStringAsFixed(2);
+  String get priceFixed {
+    final formatCurrency = NumberFormat.compact(locale: 'en_US');
+    return formatCurrency.format(price);
+  }
 
   Listing({
     this.id,
