@@ -1,4 +1,5 @@
 import 'package:app/models/listing.dart';
+import 'package:app/settings/currency.dart';
 import 'package:app/views/item.dart';
 import 'package:app/views/listing_operations.dart';
 import 'package:flutter/material.dart';
@@ -77,11 +78,16 @@ class ListingCard extends StatelessWidget {
               color: colorScheme.onPrimary,
             ),
           ),
-          subtitle: Text(
-            "₱ ${listing.priceFixed}",
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: colorScheme.onPrimary,
-            ),
+          subtitle: ValueListenableBuilder(
+            valueListenable: currency,
+            builder: (context, value, child) {
+              return Text(
+                "${currency.value} ${listing.priceFixed}",
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onPrimary,
+                ),
+              );
+            },
           ),
           onTap: () {
             Navigator.push(

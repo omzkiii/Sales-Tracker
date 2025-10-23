@@ -1,4 +1,5 @@
 import 'package:app/models/expenses.dart';
+import 'package:app/settings/currency.dart';
 import 'package:app/views/delete_dialog.dart';
 import 'package:app/views/expense_operations.dart';
 import 'package:app/views/form_expense.dart';
@@ -100,7 +101,14 @@ class ExpenseCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("₱ ${expense.amountFixed}"),
+                      ValueListenableBuilder(
+                        valueListenable: currency,
+                        builder: (context, value, child) {
+                          return Text(
+                            "${currency.value} ${expense.amountFixed}",
+                          );
+                        },
+                      ),
                       Text(expense.desc),
                     ],
                   ),
@@ -160,9 +168,16 @@ class ExpenseCard extends StatelessWidget {
               )
             : Container(
                 alignment: AlignmentGeometry.centerRight,
-                child: Text(
-                  "₱ ${expense.amountFixed}",
-                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                child: ValueListenableBuilder(
+                  valueListenable: currency,
+                  builder: (context, value, child) {
+                    return Text(
+                      "${currency.value} ${expense.amountFixed}",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                    );
+                  },
                 ),
               ),
       ),

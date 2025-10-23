@@ -38,6 +38,11 @@ class DB {
                 ON UPDATE CASCADE
                 ON DELETE CASCADE)
               ''');
+        await db.execute('''
+            CREATE TABLE IF NOT EXISTS settings(
+              key TEXT PRIMARY KEY,
+              val TEXT NOT NULL)
+              ''');
       },
       version: 2,
     );

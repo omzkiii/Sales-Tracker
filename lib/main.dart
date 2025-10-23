@@ -1,12 +1,15 @@
 import 'package:app/colors.dart';
+import 'package:app/global.dart';
+import 'package:app/settings/currency.dart';
 import 'package:app/views/form_listing.dart';
 import 'package:app/views/listing_operations.dart';
 import 'package:app/views/listings.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await loadCurrency();
   runApp(RootApp());
 }
 
@@ -63,7 +66,7 @@ class _AppState extends State<App> {
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: FloatingActionButton(
-          onPressed: () {
+          onPressed: () async {
             Navigator.push(
               context,
               MaterialPageRoute(

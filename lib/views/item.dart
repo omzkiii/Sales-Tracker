@@ -1,4 +1,5 @@
 import 'package:app/models/listing.dart';
+import 'package:app/settings/currency.dart';
 import 'package:app/views/delete_dialog.dart';
 import 'package:app/views/expense_operations.dart';
 import 'package:app/views/expenses.dart';
@@ -91,12 +92,17 @@ class _ItemState extends State<Item> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "₱ ${listing.priceFixed}",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                  ValueListenableBuilder(
+                    valueListenable: currency,
+                    builder: (context, value, child) {
+                      return Text(
+                        "${currency.value} ${listing.priceFixed}",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      );
+                    },
                   ),
                   Text(listing.desc),
                 ],
@@ -150,16 +156,21 @@ class _ItemState extends State<Item> {
         child: ListenableBuilder(
           listenable: expenseNotifier,
           builder: (context, child) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Total Expenses: ₱ ${expenseNotifier.totalExpenses.toStringAsFixed(2)}",
-                ),
-                Text(
-                  "Total Profit: ₱ ${(listing.price - expenseNotifier.totalExpenses).toStringAsFixed(2)}",
-                ),
-              ],
+            return ValueListenableBuilder(
+              valueListenable: currency,
+              builder: (context, value, child) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Total Expenses: ${currency.value} ${expenseNotifier.totalExpenses.toStringAsFixed(2)}",
+                    ),
+                    Text(
+                      "Total Profit: ${currency.value} ${(listing.price - expenseNotifier.totalExpenses).toStringAsFixed(2)}",
+                    ),
+                  ],
+                );
+              },
             );
           },
         ),
