@@ -14,7 +14,7 @@ class DB {
       },
 
       onConfigure: (db) {
-        return db.execute('PRAGMA foriegn_keys = ON');
+        return db.execute('PRAGMA foreign_keys = ON');
       },
 
       onOpen: (db) async {
@@ -30,7 +30,7 @@ class DB {
         await db.execute('''
             CREATE TABLE IF NOT EXISTS expenses(
               id INTEGER PRIMARY KEY AUTOINCREMENT,
-              listing_id INTEGER NOT NULL,
+              listing_id INTEGER,
               name TEXT NOT NULL,
               amount REAL NOT NULL,
               desc TEXT,
