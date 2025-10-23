@@ -140,6 +140,7 @@ class _ItemState extends State<Item> {
               builder: (context) => FormExpense(
                 listingId: listing.id!,
                 expenseNotifier: expenseNotifier,
+                isNew: true,
               ),
             ),
           );

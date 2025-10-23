@@ -46,14 +46,11 @@ class _FormListingState extends State<FormListing> {
 
   @override
   Widget build(BuildContext context) {
-    String formTitle = "Update Listing";
-    Function listOperation = widget.listingNotifier.changeListing;
-    IconData floatingIcon = Icons.edit;
-    if (widget.isNew) {
-      formTitle = "New Listing";
-      listOperation = widget.listingNotifier.insertToListings;
-      floatingIcon = Icons.save;
-    }
+    String formTitle = widget.isNew ? "New Listing" : "Update Listing";
+    Function listOperation = widget.isNew
+        ? widget.listingNotifier.insertToListings
+        : widget.listingNotifier.changeListing;
+    IconData floatingIcon = widget.isNew ? Icons.save : Icons.edit;
     return Scaffold(
       appBar: AppBar(title: Text(formTitle)),
       body: Form(

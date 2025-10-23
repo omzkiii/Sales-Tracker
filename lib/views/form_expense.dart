@@ -6,10 +6,16 @@ import 'package:flutter/material.dart';
 class FormExpense extends StatefulWidget {
   final int listingId;
   final ExpenseNotifier expenseNotifier;
+  final bool isNew;
+  final Expense? expense;
+  final int? index;
   const FormExpense({
     super.key,
     required this.listingId,
     required this.expenseNotifier,
+    required this.isNew,
+    this.expense,
+    this.index,
   });
 
   @override
@@ -22,15 +28,13 @@ class _FormExpenseState extends State<FormExpense> {
   late var amountController = TextEditingController();
   late var descContoller = TextEditingController();
 
-  String _formTitle = "Update Expense";
-  // Function _expenseOperation = updateListing;
-  IconData _floatingIcon = Icons.edit;
-
   @override
   void initState() {
-    nameController = TextEditingController();
-    amountController = TextEditingController();
-    descContoller = TextEditingController();
+    nameController = TextEditingController(text: widget.expense?.name);
+    amountController = TextEditingController(
+      text: widget.expense?.amount.toString(),
+    );
+    descContoller = TextEditingController(text: widget.expense?.desc);
     super.initState();
   }
 
@@ -44,8 +48,14 @@ class _FormExpenseState extends State<FormExpense> {
 
   @override
   Widget build(BuildContext context) {
+    String formTitle = widget.isNew ? "New Expense" : "Update Expense";
+    Function expenseOperation = widget.isNew
+        ? widget.expenseNotifier.addToExpenses
+        : widget.expenseNotifier.modifyExpenses;
+    IconData floatingIcon = widget.isNew ? Icons.save : Icons.edit;
+
     return Scaffold(
-      appBar: AppBar(title: Text(_formTitle)),
+      appBar: AppBar(title: Text(formTitle)),
       body: Form(
         key: _formKey,
         child: Column(
@@ -63,16 +73,19 @@ class _FormExpenseState extends State<FormExpense> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(_floatingIcon),
+        child: Icon(floatingIcon),
         onPressed: () {
           if (_formKey.currentState!.validate()) {
             Expense expense = Expense(
+              id: widget.isNew
+                  ? null
+                  : widget.expenseNotifier.list[widget.index!].id,
               listingId: widget.listingId,
               name: nameController.text,
               amount: num.parse(amountController.text).toDouble(),
               desc: descContoller.text,
             );
-            widget.expenseNotifier.addToExpenses(expense);
+            expenseOperation(expense);
             Navigator.pop(context, true);
           }
         },

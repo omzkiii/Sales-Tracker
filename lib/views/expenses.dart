@@ -1,6 +1,7 @@
 import 'package:app/models/expenses.dart';
 import 'package:app/views/delete_dialog.dart';
 import 'package:app/views/expense_operations.dart';
+import 'package:app/views/form_expense.dart';
 import 'package:flutter/material.dart';
 
 class Expenses extends StatefulWidget {
@@ -109,7 +110,18 @@ class ExpenseCard extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           selected.value = -1;
-                          print(expense);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FormExpense(
+                                listingId: expense.listingId,
+                                expenseNotifier: expenseNotifier,
+                                isNew: false,
+                                expense: expense,
+                                index: index,
+                              ),
+                            ),
+                          );
                         },
                         child: Text(
                           "Edit",

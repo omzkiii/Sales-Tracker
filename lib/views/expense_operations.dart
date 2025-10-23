@@ -25,6 +25,18 @@ class ExpenseNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  void modifyExpenses(Expense expense) async {
+    await updateExpense(expense);
+    int index = list.indexWhere((el) => el.id == expense.id);
+    list[index] = expense;
+    listKey.currentState?.removeItem(
+      index,
+      (context, animation) => SizeTransition(sizeFactor: animation),
+    );
+    listKey.currentState?.insertItem(index);
+    notifyListeners();
+  }
+
   void removeFromExpenses(Expense expense, int index, Widget child) {
     print("WILL REMOVE: $expense");
     list.removeAt(index);
