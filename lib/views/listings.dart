@@ -36,6 +36,7 @@ class Listings extends StatelessWidget {
                           child: ListingCard(
                             listing: elem,
                             listingNotifier: listingNotifier,
+                            status: status,
                           ),
                         ),
                       )
@@ -53,10 +54,13 @@ class Listings extends StatelessWidget {
 class ListingCard extends StatelessWidget {
   final Listing listing;
   final ListingNotifier listingNotifier;
+  final String status;
   const ListingCard({
     super.key,
+
     required this.listing,
     required this.listingNotifier,
+    required this.status,
   });
 
   @override
@@ -69,13 +73,15 @@ class ListingCard extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         elevation: 3,
         borderOnForeground: false,
-        color: colorScheme.primary,
+        color: status == "sold" ? colorScheme.primary : colorScheme.tertiary,
         clipBehavior: Clip.antiAlias,
         child: ListTile(
           title: Text(
             listing.name,
             style: theme.textTheme.titleMedium?.copyWith(
-              color: colorScheme.onPrimary,
+              color: status == "sold"
+                  ? colorScheme.onPrimary
+                  : colorScheme.onTertiary,
             ),
           ),
           subtitle: ValueListenableBuilder(
@@ -84,7 +90,9 @@ class ListingCard extends StatelessWidget {
               return Text(
                 "${currency.value} ${listing.priceFixed}",
                 style: theme.textTheme.bodyMedium?.copyWith(
-                  color: colorScheme.onPrimary,
+                  color: status == "sold"
+                      ? colorScheme.onPrimary
+                      : colorScheme.onTertiary,
                 ),
               );
             },

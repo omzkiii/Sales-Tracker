@@ -44,26 +44,55 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     var listingController = ListingNotifier();
+    final List<String> pageTitle = ["Listings", "Sold", "Settings"];
+    final List<Widget> pages = [
+      Listings(listingNotifier: listingController, status: "listed"),
+      Listings(listingNotifier: listingController, status: "sold"),
+    ];
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          title: TabBar(
-            tabs: [
-              Tab(text: "Listed"),
-              Tab(text: "Sold"),
-            ],
-          ),
-        ),
-        body: TabBarView(
+        appBar: AppBar(title: Text(pageTitle[selectedIndex])),
+        drawer: NavigationDrawer(
+          selectedIndex: selectedIndex,
+          onDestinationSelected: (int index) {
+            setState(() {
+              selectedIndex = index;
+              Navigator.pop(context);
+            });
+          },
           children: [
-            Listings(listingNotifier: listingController, status: "listed"),
-            Listings(listingNotifier: listingController, status: "sold"),
+            NavigationDrawerDestination(
+              icon: Icon(Icons.list_alt_sharp),
+              label: Text("Listings"),
+            ),
+            NavigationDrawerDestination(
+              icon: Icon(Icons.sell_outlined),
+              label: Text("Sold"),
+            ),
           ],
         ),
+        body: pages[selectedIndex],
+
+        // appBar: AppBar(
+        //   title: TabBar(
+        //     tabs: [
+        //       Tab(text: "Listed"),
+        //       Tab(text: "Sold"),
+        //     ],
+        //   ),
+        // ),
+        // body: TabBarView(
+        //   children: [
+        //     Listings(listingNotifier: listingController, status: "listed"),
+        //     Listings(listingNotifier: listingController, status: "sold"),
+        //   ],
+        // ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
