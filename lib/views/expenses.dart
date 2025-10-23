@@ -85,9 +85,6 @@ class ExpenseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      tileColor: selected.value == index
-          ? Theme.of(context).colorScheme.surface
-          : null,
       minTileHeight: 1,
       title: Text(expense.name),
       subtitle: AnimatedSize(
@@ -117,7 +114,9 @@ class ExpenseCard extends StatelessWidget {
                         child: Text(
                           "Edit",
                           style: TextStyle(
-                            color: Theme.of(context).colorScheme.secondary,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.onSecondaryContainer,
                           ),
                         ),
                       ),

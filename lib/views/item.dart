@@ -80,10 +80,13 @@ class _ItemState extends State<Item> {
         ],
       ),
       body: Container(
+        color: Theme.of(context).colorScheme.secondaryContainer,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+              width: double.infinity,
+              color: Theme.of(context).colorScheme.surface,
               padding: EdgeInsets.all(21),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,15 +110,15 @@ class _ItemState extends State<Item> {
                 color: Theme.of(context).colorScheme.surface,
                 border: Border(
                   top: BorderSide(
-                    color: Theme.of(context).hoverColor,
+                    color: Theme.of(context).focusColor,
                     width: 1,
                   ),
                 ),
                 boxShadow: [
                   BoxShadow(
                     color: Theme.of(context).shadowColor.withOpacity(0.2),
-                    blurRadius: 4,
-                    offset: const Offset(0, 6),
+                    blurRadius: 2,
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),

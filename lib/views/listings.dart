@@ -28,7 +28,10 @@ class Listings extends StatelessWidget {
                       .where((elem) => elem.status == status)
                       .map(
                         (elem) => Container(
-                          padding: EdgeInsets.all(10),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 0,
+                            horizontal: 10,
+                          ),
                           child: ListingCard(
                             listing: elem,
                             listingNotifier: listingNotifier,
@@ -61,52 +64,34 @@ class ListingCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
     return Hero(
       tag: "${listing.id}",
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              theme.colorScheme.surface.withBlue(255).withGreen(220),
-              theme.colorScheme.surface.withBlue(255).withGreen(180),
-              theme.colorScheme.surface.withBlue(255).withGreen(160),
-              theme.colorScheme.surface.withBlue(255).withGreen(140),
-              theme.colorScheme.primary.withBlue(255).withGreen(100),
-            ],
-          ),
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              // color: colorScheme.shadow.withOpacity(0.2),
-              blurRadius: 6,
-              offset: const Offset(0, 3),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        elevation: 3,
+        borderOnForeground: false,
+        color: colorScheme.primary,
+        clipBehavior: Clip.antiAlias,
+        child: ListTile(
+          title: Text(
+            listing.name,
+            style: theme.textTheme.titleMedium?.copyWith(
+              color: colorScheme.onPrimary,
             ),
-          ],
-        ),
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
           ),
-          elevation: 0,
-          color: Colors.transparent,
-          clipBehavior: Clip.antiAlias,
-          child: ListTile(
-            title: Text(
-              listing.name,
-              style: theme.textTheme.titleMedium?.copyWith(color: Colors.white),
+          subtitle: Text(
+            "₱ ${listing.priceFixed}",
+            style: theme.textTheme.bodyMedium?.copyWith(
+              color: colorScheme.onPrimary,
             ),
-            subtitle: Text("₱ ${listing.priceFixed}"),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      Item(item: listing, listingNotifier: listingNotifier),
-                ),
-              );
-            },
           ),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    Item(item: listing, listingNotifier: listingNotifier),
+              ),
+            );
+          },
         ),
       ),
     );
