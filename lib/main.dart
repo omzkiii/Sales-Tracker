@@ -4,6 +4,7 @@ import 'package:app/settings/currency.dart';
 import 'package:app/views/form_listing.dart';
 import 'package:app/views/listing_operations.dart';
 import 'package:app/views/listings.dart';
+import 'package:app/views/settings.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 
@@ -23,12 +24,7 @@ class RootApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Transak',
-          themeMode: ThemeMode.system,
-          theme: generateMultiSeedTheme(
-            seed1: Colors.indigo,
-            seed2: Colors.amber,
-            seed3: Colors.teal,
-          ),
+          theme: lightTheme,
           home: const App(),
         );
       },
@@ -52,6 +48,7 @@ class _AppState extends State<App> {
     final List<Widget> pages = [
       Listings(listingNotifier: listingController, status: "listed"),
       Listings(listingNotifier: listingController, status: "sold"),
+      SettingsPage(),
     ];
 
     return DefaultTabController(
@@ -74,6 +71,10 @@ class _AppState extends State<App> {
             NavigationDrawerDestination(
               icon: Icon(Icons.sell_outlined),
               label: Text("Sold"),
+            ),
+            NavigationDrawerDestination(
+              icon: Icon(Icons.settings),
+              label: Text("Settings"),
             ),
           ],
         ),

@@ -42,23 +42,11 @@ class _ExpensesState extends State<Expenses> {
                         end: Offset(0, 0.1),
                       ).chain(CurveTween(curve: Curves.easeInOut)),
                     ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: index < widget.expenseNotifier.list.length
-                              ? BorderSide(
-                                  color: Theme.of(context).highlightColor,
-                                  width: 1,
-                                )
-                              : BorderSide.none,
-                        ),
-                      ),
-                      child: ExpenseCard(
-                        expense: item,
-                        selected: selected,
-                        expenseNotifier: widget.expenseNotifier,
-                        index: index,
-                      ),
+                    child: ExpenseCard(
+                      expense: item,
+                      selected: selected,
+                      expenseNotifier: widget.expenseNotifier,
+                      index: index,
                     ),
                   );
                 },
@@ -86,102 +74,105 @@ class ExpenseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      minTileHeight: 1,
-      title: Text(expense.name),
-      subtitle: AnimatedSize(
-        alignment: Alignment.topCenter,
-        duration: Duration(milliseconds: 200),
-        curve: Curves.linearToEaseOut,
-        child: selected.value == index
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ValueListenableBuilder(
-                        valueListenable: currency,
-                        builder: (context, value, child) {
-                          return Text(
-                            "${currency.value} ${expense.amountFixed}",
-                          );
-                        },
-                      ),
-                      Text(expense.desc),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () {
-                          selected.value = -1;
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => FormExpense(
-                                listingId: expense.listingId,
-                                expenseNotifier: expenseNotifier,
-                                isNew: false,
-                                expense: expense,
-                                index: index,
-                              ),
-                            ),
-                          );
-                        },
-                        child: Text(
-                          "Edit",
-                          style: TextStyle(
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.onSecondaryContainer,
-                          ),
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          selected.value = -1;
-                          showDeleteDialog(
-                            context,
-                            expense.name,
-                            [expense, index, this],
-                            expenseNotifier.removeFromExpenses,
-                          );
-                          // expenseNotifier.removeFromExpenses(
-                          //   expense,
-                          //   index,
-                          //   this,
-                          // );
-                        },
-                        child: Text(
-                          "Delete",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.error,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            : Container(
-                alignment: AlignmentGeometry.centerRight,
-                child: ValueListenableBuilder(
-                  valueListenable: currency,
-                  builder: (context, value, child) {
-                    return Text(
-                      "${currency.value} ${expense.amountFixed}",
-                      style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
-                      ),
-                    );
-                  },
-                ),
-              ),
+    return Container(
+      margin: EdgeInsets.only(
+        left: 20,
+        right: 20,
+        top: selected.value == index ? 2 : 10,
+        bottom: selected.value == index ? 10 : 2,
       ),
-      onTap: () => {selected.value = selected.value == index ? -1 : index},
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.background,
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+      ),
+      child: ListTile(
+        minTileHeight: 1,
+        title: Text(expense.name),
+        subtitle: AnimatedSize(
+          alignment: Alignment.topCenter,
+          duration: Duration(milliseconds: 200),
+          curve: Curves.linearToEaseOut,
+          child: selected.value == index
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ValueListenableBuilder(
+                          valueListenable: currency,
+                          builder: (context, value, child) {
+                            return Text(
+                              "${currency.value.symbol} ${expense.amountFixed}",
+                            );
+                          },
+                        ),
+                        Text(expense.desc),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            selected.value = -1;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FormExpense(
+                                  listingId: expense.listingId,
+                                  expenseNotifier: expenseNotifier,
+                                  isNew: false,
+                                  expense: expense,
+                                  index: index,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Text("Edit"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            selected.value = -1;
+                            showDeleteDialog(
+                              context,
+                              expense.name,
+                              [expense, index, this],
+                              expenseNotifier.removeFromExpenses,
+                            );
+                            // expenseNotifier.removeFromExpenses(
+                            //   expense,
+                            //   index,
+                            //   this,
+                            // );
+                          },
+                          child: Text(
+                            "Delete",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )
+              : Container(
+                  alignment: AlignmentGeometry.centerRight,
+                  child: ValueListenableBuilder(
+                    valueListenable: currency,
+                    builder: (context, value, child) {
+                      return Text(
+                        "${currency.value.symbol} ${expense.amountFixed}",
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+        ),
+        onTap: () => {selected.value = selected.value == index ? -1 : index},
+      ),
     );
   }
 }

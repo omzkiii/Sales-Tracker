@@ -88,7 +88,7 @@ class ListingCard extends StatelessWidget {
             valueListenable: currency,
             builder: (context, value, child) {
               return Text(
-                "${currency.value} ${listing.priceFixed}",
+                "${currency.value.symbol} ${listing.priceFixed}",
                 style: theme.textTheme.bodyMedium?.copyWith(
                   color: status == "sold"
                       ? colorScheme.onPrimary

@@ -37,7 +37,12 @@ class _ItemState extends State<Item> {
         actions: [
           Container(
             alignment: Alignment.bottomRight,
-            child: TextButton(
+            child: FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: status == "sold"
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.tertiary,
+              ),
               onPressed: () {
                 setState(() {
                   status = status == "sold" ? "listed" : "sold";
@@ -81,13 +86,13 @@ class _ItemState extends State<Item> {
         ],
       ),
       body: Container(
-        color: Theme.of(context).colorScheme.secondaryContainer,
+        color: Theme.of(context).colorScheme.surface,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               width: double.infinity,
-              color: Theme.of(context).colorScheme.surface,
+              color: Theme.of(context).colorScheme.secondaryFixedDim,
               padding: EdgeInsets.all(21),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,10 +101,10 @@ class _ItemState extends State<Item> {
                     valueListenable: currency,
                     builder: (context, value, child) {
                       return Text(
-                        "${currency.value} ${listing.priceFixed}",
+                        "${currency.value.symbol} ${listing.priceFixed}",
                         style: TextStyle(
                           fontSize: 18,
-                          color: Theme.of(context).colorScheme.primary,
+                          color: Theme.of(context).colorScheme.onSecondaryFixed,
                         ),
                       );
                     },
@@ -114,21 +119,15 @@ class _ItemState extends State<Item> {
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surface,
-                border: Border(
-                  top: BorderSide(
-                    color: Theme.of(context).focusColor,
-                    width: 1,
-                  ),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Theme.of(context).shadowColor.withOpacity(0.2),
-                    blurRadius: 2,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
               ),
-              child: Text("Expenses", style: TextStyle(fontSize: 21)),
+              child: Text(
+                "Expenses",
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.surfaceTint,
+                ),
+              ),
             ),
             Expenses(listingId: listing.id!, expenseNotifier: expenseNotifier),
           ],
@@ -163,10 +162,10 @@ class _ItemState extends State<Item> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Total Expenses: ${currency.value} ${expenseNotifier.totalExpenses.toStringAsFixed(2)}",
+                      "Total Expenses: ${currency.value.symbol} ${expenseNotifier.totalExpenses.toStringAsFixed(2)}",
                     ),
                     Text(
-                      "Total Profit: ${currency.value} ${(listing.price - expenseNotifier.totalExpenses).toStringAsFixed(2)}",
+                      "Total Profit: ${currency.value.symbol} ${(listing.price - expenseNotifier.totalExpenses).toStringAsFixed(2)}",
                     ),
                   ],
                 );

@@ -11,11 +11,12 @@ Future<void> changeCurrency(String currency) async {
   }, conflictAlgorithm: ConflictAlgorithm.replace);
 }
 
-ValueNotifier<String> currency = ValueNotifier<String>("\$");
+ValueNotifier<Currency> currency = ValueNotifier<Currency>(
+  Currency(code: 'USD', name: 'US Dollar', symbol: '\$'),
+);
 Future<void> loadCurrency() async {
   String currCode = await getSetting("currency");
-  String symbol = currencies[currCode]!.symbol;
-  currency.value = symbol;
+  currency.value = currencies[currCode]!;
 }
 
 class Currency {

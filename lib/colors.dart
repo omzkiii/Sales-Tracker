@@ -1,31 +1,80 @@
 import 'package:flutter/material.dart';
 
-/// Mix two colors evenly in HSL space.
-Color _mix(Color a, Color b, [double amount = 0.5]) {
-  final hslA = HSLColor.fromColor(a);
-  final hslB = HSLColor.fromColor(b);
-
-  final mixed = HSLColor.fromAHSL(
-    (hslA.alpha + hslB.alpha) / 2,
-    (hslA.hue + hslB.hue) / 2,
-    (hslA.saturation + hslB.saturation) / 2,
-    (hslA.lightness + hslB.lightness) / 2,
-  );
-
-  return mixed.toColor();
+class AppColors {
+  static const lapisLazuli = Color(0xFF05668D);
+  static const teal = Color(0xFF028090);
+  static const persianGreen = Color(0xFF00A896);
+  static const jungleGreen = Color(0xFF01B698);
+  static const mint = Color(0xFF02C39A);
+  static const mint2 = Color(0xFF3ECFA3);
+  static const celadon = Color(0xFF79DBAC);
+  static const cream = Color(0xFFF0F3BD);
 }
 
-ThemeData generateMultiSeedTheme({
-  required Color seed1,
-  required Color seed2,
-  required Color seed3,
-  Brightness brightness = Brightness.light,
-}) {
-  final blended = _mix(_mix(seed1, seed2, 0.5), seed3, 0.5);
+ThemeData lightTheme = ThemeData(
+  useMaterial3: true,
+  brightness: Brightness.light,
+  colorScheme: const ColorScheme(
+    brightness: Brightness.light,
+    primary: AppColors.teal,
+    onPrimary: Colors.white,
+    secondary: AppColors.mint,
+    onSecondary: Colors.white,
+    tertiary: AppColors.persianGreen,
+    onTertiary: Colors.white,
+    error: Colors.redAccent,
+    onError: Colors.white,
+    surface: Colors.white,
+    onSurface: Colors.black87,
+    background: AppColors.celadon,
+    onBackground: Colors.black87,
+  ),
+  scaffoldBackgroundColor: Colors.white,
+  appBarTheme: const AppBarTheme(
+    backgroundColor: AppColors.mint,
+    foregroundColor: Colors.white,
+  ),
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    backgroundColor: AppColors.mint,
+    foregroundColor: Colors.white,
+  ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    backgroundColor: AppColors.celadon,
+    selectedItemColor: AppColors.teal,
+    unselectedItemColor: Colors.grey,
+  ),
+);
 
-  final base = ColorScheme.fromSeed(seedColor: blended, brightness: brightness);
-
-  final customScheme = base.copyWith(secondary: seed2, tertiary: seed3);
-
-  return ThemeData(colorScheme: customScheme, useMaterial3: true);
-}
+ThemeData darkTheme = ThemeData(
+  useMaterial3: true,
+  brightness: Brightness.dark,
+  colorScheme: const ColorScheme(
+    brightness: Brightness.dark,
+    primary: AppColors.mint,
+    onPrimary: Colors.black,
+    secondary: AppColors.jungleGreen,
+    onSecondary: Colors.black,
+    tertiary: AppColors.persianGreen,
+    onTertiary: Colors.black,
+    error: Colors.redAccent,
+    onError: Colors.black,
+    surface: AppColors.lapisLazuli,
+    onSurface: Colors.white,
+    background: AppColors.teal,
+    onBackground: Colors.white,
+  ),
+  scaffoldBackgroundColor: AppColors.lapisLazuli,
+  appBarTheme: const AppBarTheme(
+    backgroundColor: AppColors.teal,
+    foregroundColor: Colors.white,
+  ),
+  floatingActionButtonTheme: const FloatingActionButtonThemeData(
+    backgroundColor: AppColors.mint2,
+    foregroundColor: Colors.black,
+  ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    backgroundColor: AppColors.teal,
+    selectedItemColor: AppColors.mint,
+    unselectedItemColor: Colors.white70,
+  ),
+);
