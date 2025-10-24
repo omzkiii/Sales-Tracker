@@ -7,6 +7,7 @@ import 'package:app/views/form_expense.dart';
 import 'package:app/views/form_listing.dart';
 import 'package:app/views/listing_operations.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 class Item extends StatefulWidget {
   final Listing item;
@@ -86,7 +87,7 @@ class _ItemState extends State<Item> {
         ],
       ),
       body: Container(
-        color: Theme.of(context).colorScheme.surface,
+        color: Theme.of(context).hoverColor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -103,13 +104,14 @@ class _ItemState extends State<Item> {
                       return Text(
                         "${currency.value.symbol} ${listing.priceFixed}",
                         style: TextStyle(
-                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 21,
                           color: Theme.of(context).colorScheme.onSecondaryFixed,
                         ),
                       );
                     },
                   ),
-                  Text(listing.desc),
+                  Text(listing.desc, style: TextStyle(fontSize: 16)),
                 ],
               ),
             ),
@@ -158,14 +160,23 @@ class _ItemState extends State<Item> {
             return ValueListenableBuilder(
               valueListenable: currency,
               builder: (context, value, child) {
+                double profit = listing.price - expenseNotifier.totalExpenses;
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Total Expenses: ${currency.value.symbol} ${expenseNotifier.totalExpenses.toStringAsFixed(2)}",
+                      style: TextStyle(fontSize: 16),
                     ),
                     Text(
-                      "Total Profit: ${currency.value.symbol} ${(listing.price - expenseNotifier.totalExpenses).toStringAsFixed(2)}",
+                      "Total Profit: ${currency.value.symbol} ${profit.toStringAsFixed(2)}",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w900,
+                        color: profit > 0
+                            ? Colors.lightGreen
+                            : Colors.redAccent,
+                      ),
                     ),
                   ],
                 );
