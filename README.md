@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.svg" alt="Transak Logo" width="150"/>
+  <img src="assets/logo.svg" alt="Transak Logo" width="500"/>
 </p>
 <h1 align="center"> Transak </h1>
 <p align="center">* A straight forward listing management mobile app.*</p>
