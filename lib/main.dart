@@ -11,25 +11,14 @@ import 'package:flutter/material.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await loadCurrency();
-  runApp(RootApp());
-}
-
-class RootApp extends StatelessWidget {
-  const RootApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return DynamicColorBuilder(
-      builder: (ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Transak',
-          theme: lightTheme,
-          home: const App(),
-        );
-      },
-    );
-  }
+  runApp(
+    MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Transak',
+      theme: lightTheme,
+      home: const App(),
+    ),
+  );
 }
 
 class App extends StatefulWidget {
