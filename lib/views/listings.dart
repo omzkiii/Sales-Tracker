@@ -23,7 +23,7 @@ class Listings extends StatelessWidget {
           ListenableBuilder(
             listenable: listingNotifier,
             builder: (context, child) {
-              if (listingNotifier.list.any((elem) => elem.status != status)) {
+              if (!listingNotifier.list.any((elem) => elem.status == status)) {
                 return Expanded(
                   child: Center(
                     child: Text(
