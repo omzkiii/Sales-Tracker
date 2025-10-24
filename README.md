@@ -1,5 +1,6 @@
 <p align="center">
   <img src="https://img.shields.io/badge/flutter-3.11-blue"/>
+  <img src="https://img.shields.io/badge/license-GPLv3-blue"/>
 </p>
 
 <p align="center">
@@ -20,5 +21,3 @@
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request.
-
-![License](https://img.shields.io/badge/license-GPLv3-blue)
