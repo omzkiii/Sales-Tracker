@@ -35,7 +35,7 @@ flutter pub get
 flutter build apk --release
 ```
 
-## Technologies Used
+## Tech used
 - Flutter
 - Dart
 - SQLite (for data management)
