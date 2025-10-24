@@ -20,3 +20,5 @@
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request.
+
+![License](https://img.shields.io/badge/license-GPLv3-blue)
