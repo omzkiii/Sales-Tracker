@@ -58,11 +58,11 @@ class _FormListingState extends State<FormListing> {
         child: Column(
           children: [
             InputField<String>(inputName: "Name", controller: nameController),
+            InputField<double>(inputName: "Price", controller: priceController),
             InputField<String>(
               inputName: "Description",
               controller: descController,
             ),
-            InputField<double>(inputName: "Price", controller: priceController),
           ],
         ),
       ),

@@ -13,22 +13,28 @@ class InputField<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormField(
       builder: (context) {
+        bool isDescription = inputName == "Description";
         return Container(
           padding: EdgeInsets.all(50),
           child: Column(
             children: [
               TextFormField(
                 controller: controller,
-                decoration: InputDecoration(labelText: inputName),
+                maxLines: isDescription ? 7 : 1,
+                decoration: InputDecoration(
+                  labelText: isDescription ? null : inputName,
+                  border: isDescription ? OutlineInputBorder() : null,
+                  hintText: isDescription ? 'Description' : null,
+                ),
                 validator: (value) {
-                  if (inputName == "Description") {
+                  if (isDescription) {
                     return null;
                   }
                   if (value == null || value.isEmpty) {
                     return 'Please input ${inputName.toLowerCase()}.';
                   }
                   if (T == double && num.tryParse(value) == null) {
-                    return 'Please input a valid price.';
+                    return 'Please input a valid amount.';
                   }
                   return null;
                 },

@@ -11,9 +11,7 @@ Future<void> changeCurrency(String currency) async {
   }, conflictAlgorithm: ConflictAlgorithm.replace);
 }
 
-ValueNotifier<Currency> currency = ValueNotifier<Currency>(
-  Currency(code: 'USD', name: 'US Dollar', symbol: '\$'),
-);
+ValueNotifier<Currency> currency = ValueNotifier<Currency>(currencies["USD"]!);
 Future<void> loadCurrency() async {
   String currCode = await getSetting("currency");
   currency.value = currencies[currCode]!;

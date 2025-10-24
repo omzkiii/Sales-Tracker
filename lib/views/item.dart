@@ -7,7 +7,6 @@ import 'package:app/views/form_expense.dart';
 import 'package:app/views/form_listing.dart';
 import 'package:app/views/listing_operations.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 class Item extends StatefulWidget {
   final Listing item;

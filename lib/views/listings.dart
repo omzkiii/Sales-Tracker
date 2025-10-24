@@ -1,5 +1,6 @@
 import 'package:app/models/listing.dart';
 import 'package:app/settings/currency.dart';
+import 'package:app/views/form_listing.dart';
 import 'package:app/views/item.dart';
 import 'package:app/views/listing_operations.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,20 @@ class Listings extends StatelessWidget {
             },
           ),
         ],
+      ),
+
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  FormListing(isNew: true, listingNotifier: listingNotifier),
+            ),
+          );
+        },
+        child: Icon(Icons.add),
       ),
     );
   }

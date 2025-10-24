@@ -53,8 +53,8 @@ class _ExpensesState extends State<Expenses> {
                       return SlideTransition(
                         position: animation.drive(
                           Tween<Offset>(
-                            begin: Offset(0, 0.1),
-                            end: Offset(0, 0.1),
+                            begin: Offset(0, 0),
+                            end: Offset(0, 0),
                           ).chain(CurveTween(curve: Curves.easeInOut)),
                         ),
                         child: ExpenseCard(
@@ -92,12 +92,7 @@ class ExpenseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
-        left: 20,
-        right: 20,
-        top: selected.value == index ? 2 : 10,
-        bottom: selected.value == index ? 10 : 2,
-      ),
+      margin: EdgeInsets.symmetric(vertical: 3, horizontal: 20),
       child: Material(
         clipBehavior: Clip.antiAliasWithSaveLayer,
         color: Theme.of(context).colorScheme.background,

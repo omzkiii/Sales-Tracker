@@ -1,16 +1,13 @@
 import 'package:app/colors.dart';
-import 'package:app/global.dart';
 import 'package:app/settings/currency.dart';
 import 'package:app/views/form_listing.dart';
 import 'package:app/views/listing_operations.dart';
 import 'package:app/views/listings.dart';
 import 'package:app/views/settings.dart';
-import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await loadCurrency();
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -68,36 +65,6 @@ class _AppState extends State<App> {
           ],
         ),
         body: pages[selectedIndex],
-
-        // appBar: AppBar(
-        //   title: TabBar(
-        //     tabs: [
-        //       Tab(text: "Listed"),
-        //       Tab(text: "Sold"),
-        //     ],
-        //   ),
-        // ),
-        // body: TabBarView(
-        //   children: [
-        //     Listings(listingNotifier: listingController, status: "listed"),
-        //     Listings(listingNotifier: listingController, status: "sold"),
-        //   ],
-        // ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => FormListing(
-                  isNew: true,
-                  listingNotifier: listingController,
-                ),
-              ),
-            );
-          },
-          child: Icon(Icons.add),
-        ),
       ),
     );
   }

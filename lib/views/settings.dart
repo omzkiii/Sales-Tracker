@@ -9,9 +9,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  String? _selectedCurrency;
-  bool _darkMode = false;
-
   @override
   void initState() {
     super.initState();
