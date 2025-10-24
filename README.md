@@ -17,6 +17,28 @@
 - Clean and responsive UI
 - Easy currency management
 
+## Building from source
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/transak.git
+```
+2. Navigate to the folder: 
+```bash
+cd transak
+```
+3. Install dependencies:
+```bash
+flutter pub get
+```
+4. Build the apk:
+```bash
+flutter build apk --release
+```
+
+## Technologies Used
+- Flutter
+- Dart
+- SQLite (for data management)
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request.
