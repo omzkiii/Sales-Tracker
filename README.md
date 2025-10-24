@@ -1,6 +1,5 @@
 <p align="center">
   <img src="https://img.shields.io/badge/flutter-3.11-blue"/>
-  <img src="https://img.shields.io/badge/license-GPLv3-blue"/>
 </p>
 
 <p align="center">
