@@ -20,11 +20,11 @@
 ## Building from source
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/transak.git
+git clone https://github.com/omzkiii/Transak
 ```
 2. Navigate to the folder: 
 ```bash
-cd transak
+cd Transak
 ```
 3. Install dependencies:
 ```bash
